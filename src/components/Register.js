@@ -1,5 +1,6 @@
 import React from 'react';
 import './SignIn.css';
+import { Link } from 'react-router-dom';
 
 function Register() {
   return (
@@ -27,7 +28,9 @@ function Register() {
     <input type="password" placeholder="Enter Password" name="psw" required />
 
     <div class="clearfix">
-      <button type="button" class="cancelbtn">Cancel</button>
+      <Link to='/log-in'>
+        <button type="button" class="cancelbtn">Cancel</button>
+      </Link>
       <button type="submit" class="signupbtn">Sign Up</button>
     </div>
     </div>

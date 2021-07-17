@@ -37,8 +37,13 @@ button:hover {
   background-color: #f44336;
 }
 
+.registerbtn {
+  padding: 14px 20px;
+  background-color: rgba(255, 30, 0, 0.89);
+}
+
 /* Float cancel and signup buttons and add an equal width */
-.cancelbtn, .signupbtn {
+.cancelbtn, .signupbtn, .registerbtn {
   float: left;
   width: 50%;
 }
