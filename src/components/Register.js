@@ -28,7 +28,7 @@ function Register() {
     <input type="password" placeholder="Enter Password" name="psw" required />
 
     <div class="clearfix">
-      <Link to='/log-in'>
+      <Link to='/login'>
         <button type="button" class="cancelbtn">Cancel</button>
       </Link>
       <button type="submit" class="signupbtn">Sign Up</button>

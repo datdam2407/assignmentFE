@@ -1,14 +1,14 @@
 import React from 'react';
 import '../App.css';
 import { Button } from './Button';
-import './HeroSection.css';
+import './BodyApp.css';
 
-function HeroSection() {
+function BodyApp() {
   return (
-    <div className='hero-container'>
+    <div className='body-container'>
       <h1>Shopping Now</h1>
       <p>What are you waiting for?</p>
-      <div className='hero-btns'>
+      <div className='body-btns'>
         <Button
           className='btns'
           buttonStyle='btn--outline'
@@ -22,4 +22,4 @@ function HeroSection() {
   );
 }
 
-export default HeroSection;
+export default BodyApp;

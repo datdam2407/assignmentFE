@@ -8,7 +8,6 @@ function Navbar() {
   const [button, setButton] = useState(true);
 
   const handleClick = () => setClick(!click);
-  const closeMobileMenu = () => setClick(false);
 
   const showButton = () => {
     if (window.innerWidth <= 960) {
@@ -27,7 +26,7 @@ function Navbar() {
     <>
       <nav className='navbar'>
         <div className='navbar-container'>
-          <Link to='/' className='navbar-logo' onClick={closeMobileMenu}>
+          <Link to='/' className='navbar-logo' >
             Assignment
             <i class='fab fa-typo3' />
           </Link>
@@ -36,31 +35,28 @@ function Navbar() {
           </div>
           <ul className={click ? 'nav-menu active' : 'nav-menu'}>
             <li className='nav-item'>
-              <Link to='/' className='nav-links' onClick={closeMobileMenu}>
+              <Link to='/' className='nav-links' >
                 Home
               </Link>
             </li>
             <li className='nav-item'>
               <Link
-                to='/products'
+                to='/products/'
                 className='nav-links'
-                onClick={closeMobileMenu}
               >
                 Products
               </Link>
             </li>
-
             <li>
               <Link
-                to='/log-in'
+                to='/login'
                 className='nav-links-mobile'
-                onClick={closeMobileMenu}
               >
                 Login
               </Link>
             </li>
           </ul>
-          {button && <Button buttonStyle='btn--outline'>Login</Button>}
+          {button && <Button buttonStyle='btn--outline' buttonPath='/login'>Login</Button>}
         </div>
       </nav>
     </>
