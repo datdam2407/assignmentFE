@@ -9,8 +9,6 @@ export default function SignIn() {
   const [password, setPassword] = useState("");
 
 
-
-
   async function access() {
     const body = {
       'username': username,

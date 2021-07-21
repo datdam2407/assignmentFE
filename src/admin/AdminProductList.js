@@ -107,9 +107,10 @@ class AdminProductList extends PureComponent {
                   <td>{item.productPrice.toLocaleString('en-US', {style : 'currency', currency : 'VND'})}</td>
                   <td>{item.productQuantity}</td>
                   <td>
-                  <img className="editImage" src='../images/edit.png' ></img>
+                  <img  className="editImage" src='../images/edit.png' ></img>
+                  <Link to={`/create/${item.productID}`}> 
                   <img className="editImage" src='../images/delete.png' ></img>
-                  
+                  </Link>
                   </td>
                
                 </tr>
