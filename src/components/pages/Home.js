@@ -6,6 +6,7 @@ import Footer from '../Footer';
 function Home() {
   return (
     <>
+    
       <BodyApp />
       <Footer />
     </>

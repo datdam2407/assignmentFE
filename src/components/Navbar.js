@@ -47,6 +47,14 @@ function Navbar() {
                 Products
               </Link>
             </li>
+            <li className='nav-item'>
+              <Link
+                to='/categories/'
+                className='nav-links'
+              >
+                Category
+              </Link>
+            </li>
             <li>
               <Link
                 to='/login'

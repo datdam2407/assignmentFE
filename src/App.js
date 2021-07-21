@@ -9,7 +9,10 @@ import LogIn from './components/pages/LogIn';
 import Cart from './components/pages/Cart';
 
 import AdminProductList from './admin/AdminProductList';
+import AdminCategory from './admin/AdminCategory';
 import AdminCreateProduct from './admin/AdminCreateProduct';
+import AdminCreateCategory from './admin/AdminCreateCategory';
+import AdminUpdateCategory from './admin/AdminUpdateCategory';
 
 function App() {
   return (
@@ -19,9 +22,12 @@ function App() {
         <Switch>
           <Route path='/' exact component={Home} />
           <Route path='/products/' component={AdminProductList} />
+          <Route path='/categories/' component={AdminCategory} />
           <Route path='/login' component={LogIn} />
           <Route path='/signup' component={SignUp} />
           <Route path='/create' component={AdminCreateProduct} />
+          <Route path='/updateCategory/:id' component={AdminUpdateCategory} />
+          <Route path='/createCategory' component={AdminCreateCategory} />
           <Route path='/cart' component={Cart} />
         </Switch>
       </Router>

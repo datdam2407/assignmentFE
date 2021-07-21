@@ -33,7 +33,7 @@ export default function SignIn() {
       <input type="password" placeholder="Enter Password" name="password" required onChange={(e) => setPassword(e.target.value)} />
 
       <div class="clearfix">
-        <Link to='/' className='btn-mobile'>
+        <Link to='/products/' className='btn-mobile'>
           <button onClick={access} class="signupbtn">Login</button>
 
         </Link>

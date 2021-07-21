@@ -21,8 +21,6 @@ class AdminProductList extends PureComponent {
       orgtableData: [],
       perPage: 5,
       currentPage: 0
-      // modelIns: false
-
     }
 
 
@@ -77,13 +75,49 @@ class AdminProductList extends PureComponent {
         })
       });
   }
-
-
+  editProduct() {
+    const data = {
+      productName: "productName",
+      productDiscription: "productDiscription",
+      productPrice: "productPrice",
+      productImage: "productImage",
+      productQuantity: "productQuantity",
+      categoryid: "categoryid",
+    }
+    const headers = {
+      'Authorization': 'auth',
+    };
+    axios.put('http://localhost8080/products', data , {headers})
+    .then((data)=> {
+      console.log(data);
+    }).catch((err) => {
+      console.log(err);
+    })
+  }
+  deleteProduct(){
+    const data = {
+      productName: "productName",
+      productDiscription: "productDiscription",
+      productPrice: "productPrice",
+      productImage: "productImage",
+      productQuantity: "productQuantity",
+      categoryid: "categoryid",
+    }
+    const headers = {
+      'Authorization': 'auth',
+    };
+    axios.delete('http://localhost8080/products/manager/{id}', data ,{ headers})
+    .then((data)=> {
+      console.log(data);
+    }).catch((err) => {
+      console.log(err);
+    })
+  }
+ 
   render() {
     return (
       <div>
         <Link to="/create" class="createButton" >Create new Product</Link>
-
         <table class="container">
           <thead>
             <tr>
@@ -107,9 +141,14 @@ class AdminProductList extends PureComponent {
                   <td>{item.productPrice.toLocaleString('en-US', {style : 'currency', currency : 'VND'})}</td>
                   <td>{item.productQuantity}</td>
                   <td>
-                  <img  className="editImage" src='../images/edit.png' ></img>
+                  
                   <Link to={`/create/${item.productID}`}> 
-                  <img className="editImage" src='../images/delete.png' ></img>
+                  <img onClick={this.editProduct}  className="editImage" src='../images/edit.png' ></img>
+                  </Link>
+                  
+                  <Link to={"/products/"}> 
+                  <img onClick={this.deleteProduct} className="editImage" 
+                  src='../images/delete.png' ></img>
                   </Link>
                   </td>
                
