@@ -22,9 +22,9 @@ export default function SignIn() {
     localStorage.setItem("auth", response.data.type+ " " +response.data.token)
   }
   return (
-    <div class="container">
+    <div class="containerrr">
       <h1>Login</h1>
-      <hr />
+      <hr/>
 
       <label for="email"><b>Username</b></label>
       <input type="text" placeholder="Enter Email" name="username" required onChange={(e) => setUsername(e.target.value)} />
