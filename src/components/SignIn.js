@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import './SignIn.css';
-import { Link } from 'react-router-dom';
-import LogIn from './pages/LogIn';
+import { Link , useHistory} from 'react-router-dom';
 import axios from 'axios';
+import NavbarCustomer from './NavbarCustomer';
 export default function SignIn() {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const history = useHistory();
 
 
   async function access() {
@@ -20,28 +21,48 @@ export default function SignIn() {
 
     let response = await axios.post('http://localhost:8080/public/login', body, { headers })
     localStorage.setItem("auth", response.data.type+ " " +response.data.token)
+    return response;
   }
+  
+  async function handleSubmit(event) {
+    event.preventDefault();
+
+    try {
+        const authortication = await access();
+        console.log(authortication.data);
+
+        if (authortication.data.roles[0] === "ROLE_MANAGER") {
+          history.push("/Admin");
+        }
+        else {
+            history.push("/");
+        }
+        console.log(authortication.data);
+    } catch (e) {
+        alert(e.message);
+    }
+}
   return (
-    <div class="containerrr">
-      <h1>Login</h1>
+    <>
+    <NavbarCustomer/>
+    <div className="containerrr">
+      
       <hr/>
 
-      <label for="email"><b>Username</b></label>
+      <label htmlFor="email"><b>Username</b></label>
       <input type="text" placeholder="Enter Email" name="username" required onChange={(e) => setUsername(e.target.value)} />
 
-      <label for="psw"><b>Password</b></label>
+      <label htmlFor="password"><b>Password</b></label>
       <input type="password" placeholder="Enter Password" name="password" required onChange={(e) => setPassword(e.target.value)} />
 
-      <div class="clearfix">
-        <Link to='/products/' className='btn-mobile'>
-          <button onClick={access} class="signupbtn">Login</button>
-
-        </Link>
+      <div className="clearfix">
+          <button onClick={(e) => { handleSubmit(e) }} className="signupbtn">Login</button>
         <Link to='/signup' className='btn-mobile'>
-          <button type="submit" class="registerbtn">  Do you have an account!</button>
+          <button type="submit" className="registerbtn">  Do you have an account!</button>
         </Link>
       </div>
     </div>
+    </>
   );
 
 }

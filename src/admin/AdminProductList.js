@@ -4,11 +4,7 @@ import ReactPaginate from 'react-paginate';
 import './AdminProductList.css';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
-
-// import "bootstrap/dist/css/bootstrap.min.css";
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-// import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import Navbar from '../components/Navbar';
 
 class AdminProductList extends PureComponent {
 
@@ -23,7 +19,7 @@ class AdminProductList extends PureComponent {
       currentPage: 0
     }
 
-
+    this.getData();
     this.handlePageClick = this.handlePageClick.bind(this);
 
   }
@@ -31,6 +27,20 @@ class AdminProductList extends PureComponent {
     this.setState({ modelIns: !this.state.modelIns });
 
   }
+//   componentDidMount() {
+//     this.getCategories();
+// }
+
+// getCategories() {
+//   axios
+//       .get('http://localhost:8080/categories/', {})
+//       .then(res => {
+//           this.setState({
+//               category: res.data,
+//           });
+//       })
+// }
+
 
   handlePageClick = (e) => {
     const selectedPage = e.selected;
@@ -56,11 +66,7 @@ class AdminProductList extends PureComponent {
 
   }
 
-  componentDidMount() {
-    this.getData();
-  }
   getData() {
-    // localStorage.getItem("auth")
     axios
       .get('http://localhost:8080/products/')
       .then(res => {
@@ -75,50 +81,35 @@ class AdminProductList extends PureComponent {
         })
       });
   }
-  editProduct() {
-    const data = {
-      productName: "productName",
-      productDiscription: "productDiscription",
-      productPrice: "productPrice",
-      productImage: "productImage",
-      productQuantity: "productQuantity",
-      categoryid: "categoryid",
-    }
+  delProduct(item) {
     const headers = {
-      'Authorization': 'auth',
+      'Content-Type': 'application/json',
+      'Authorization': localStorage.getItem('auth')
+
     };
-    axios.put('http://localhost8080/products', data , {headers})
-    .then((data)=> {
-      console.log(data);
-    }).catch((err) => {
-      console.log(err);
-    })
+    axios.delete(`http://localhost:8080/products/manager/${item.productID}`, { headers })
+      .then(res => {
+        this.getData();
+      }).catch(err => {
+        console.log(err);
+      })
+
   }
-  deleteProduct(){
-    const data = {
-      productName: "productName",
-      productDiscription: "productDiscription",
-      productPrice: "productPrice",
-      productImage: "productImage",
-      productQuantity: "productQuantity",
-      categoryid: "categoryid",
-    }
-    const headers = {
-      'Authorization': 'auth',
-    };
-    axios.delete('http://localhost8080/products/manager/{id}', data ,{ headers})
-    .then((data)=> {
-      console.log(data);
-    }).catch((err) => {
-      console.log(err);
-    })
-  }
- 
   render() {
     return (
       <div>
-        <Link to="/create" class="createButton" >Create new Product</Link>
-        <table class="container">
+        <Navbar/>
+        <div className="wrap">
+            <div className="search">
+                <input type="text" className="searchTerm" placeholder="What are you looking for?"/>
+                <button type="submit" className="searchButton">
+                    <i className="fa fa-search"></i>
+                </button>
+            </div>
+            </div>
+        <Link to="/create/" className="createButton" >Create new Product</Link>
+   
+        <table className="container">
           <thead>
             <tr>
               <th>Name</th>
@@ -140,14 +131,14 @@ class AdminProductList extends PureComponent {
                   <td>{moment(item.updateDate).format("MMMM Do YYYY")}</td>
                   <td>{item.productPrice.toLocaleString('en-US', {style : 'currency', currency : 'VND'})}</td>
                   <td>{item.productQuantity}</td>
+                  
                   <td>
-                  
-                  <Link to={`/create/${item.productID}`}> 
-                  <img onClick={this.editProduct}  className="editImage" src='../images/edit.png' ></img>
-                  </Link>
-                  
+                  <Link to={"/updateProduct/" + item.productID}>
+                      <img className="editImage"
+                        src='../images/edit.png' ></img>
+                    </Link>
                   <Link to={"/products/"}> 
-                  <img onClick={this.deleteProduct} className="editImage" 
+                  <img onClick={this.delProduct.bind(this, item)} className="editImage" 
                   src='../images/delete.png' ></img>
                   </Link>
                   </td>
@@ -179,3 +170,6 @@ class AdminProductList extends PureComponent {
 
 
 export default AdminProductList;
+
+
+

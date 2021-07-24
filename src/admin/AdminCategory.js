@@ -3,8 +3,9 @@ import axios from 'axios';
 import ReactPaginate from 'react-paginate';
 import './AdminProductList.css';
 import { Link } from 'react-router-dom';
+import Navbar from '../components/Navbar';
 
-class AdminCategoryList extends PureComponent {
+export default class AdminCategoryList extends PureComponent {
 
   constructor(props) {
     super(props)
@@ -18,6 +19,7 @@ class AdminCategoryList extends PureComponent {
     this.getData();
     this.handlePageClick = this.handlePageClick.bind(this);
   }
+ 
   handlePageClick = (e) => {
     const selectedPage = e.selected;
     const offset = selectedPage * this.state.perPage;
@@ -41,46 +43,21 @@ class AdminCategoryList extends PureComponent {
     })
 
   }
-  // componentDidMount() {
-  //   this.getData();
-  // }
+
   
-  getData() {
+ async getData() {
     // localStorage.getcategory("auth");
-    axios
-      .get('http://localhost:8080/categories/')
-      .then(res => {
-        var tdata = res.data;
-        var slice = tdata.slice(this.state.offset,
-          this.state.offset + this.state.perPage)
-        this.setState({
-          pageCount: Math.ceil(tdata.length / this.state.perPage),
-          orgtableData: tdata,
-          tableData: slice
-        })
-      });
+    let res = await axios.get('http://localhost:8080/categories/');
+    var tdata = res.data;
+    var slice = tdata.slice(this.state.offset,
+      this.state.offset + this.state.perPage)
+      this.setState({
+      pageCount: Math.ceil(tdata.length / this.state.perPage),
+      orgtableData: tdata,
+      tableData: slice
+    });
   }
 
-  // editCategory(categoryID) {
-  //   const data = {
-
-  //     categoryName: 'categoryName',
-  //     categoryDescription: 'categoryDescription'
-
-  //   }
-  //   const headers = {
-  //     'Content-Type': 'application/json',
-  //     'Authorization': localStorage.getItem('auth')
-  //   };
-  //   axios.put(`http://localhost8080/categories/${categoryID}`, data, { headers }).
-  //     then(res => {
-  //       console.log(res);
-  //     }).catch(err => {
-  //       console.log(err);
-  //     })
-
-
-  // }
   delCategory(item) {
     const headers = {
       'Content-Type': 'application/json',
@@ -99,8 +76,18 @@ class AdminCategoryList extends PureComponent {
   render() {
     return (
       <div>
-        <Link to="/createCategory" class="createButton" >Create new Category</Link>
-        <table class="container">
+        <Navbar/>
+
+        <div className="wrap">
+            <div className="search">
+                <input type="text" className="searchTerm" placeholder="What are you looking for?"/>
+                <button type="submit" className="searchButton">
+                    <i className="fa fa-search"></i>
+                </button>
+            </div>
+            </div>
+        <Link to="/createCategory" className="createButton" >Create new Category</Link>
+        <table className="container">
           <thead>
             <tr>
               <th>Name</th>
@@ -118,7 +105,8 @@ class AdminCategoryList extends PureComponent {
                       <img className="editImage"
                         src='../images/edit.png' ></img>
                     </Link>
-                      <img onClick={this.delCategory.bind(this, category)} className="editImage"
+                      <img onClick={this.delCategory.bind(this, category)}
+                       className="editImage"
                         src='../images/delete.png' ></img>
                   </td>
                 </tr>
@@ -147,4 +135,35 @@ class AdminCategoryList extends PureComponent {
   }
 }
 
-export default AdminCategoryList;
+// class SearchFormCategory extends React.Component{
+//   render()
+//   {
+//       return <form>
+//           <input placeholder="Enter the name to find"/>
+//       </form>
+//   }
+// }
+// class TableCategory extends React.Component{
+//   render()
+//   {
+//       return 
+//           <table class="container">
+//           <thead>
+//             <tr>
+//               <th>Name</th>
+//               <th>Discription</th>
+//             </tr>
+//           </thead>
+//           <tbody>
+//             {
+//               this.state.tableData.map((category) => (
+//                 <tr key={category.categoryID}>
+//                   <td>{category.categoryName}</td>
+//                   <td>{category.categoryDescription}</td>
+//                 </tr>
+//               ))
+//             }
+//           </tbody>
+//         </table>
+//   }
+// }

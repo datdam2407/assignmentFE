@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
+
 *
 {
     -webkit-box-sizing: border-box;
@@ -7,7 +8,18 @@
     padding: 0;
 }
 
-
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    padding: 5px;
+  }
+  /* .{
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    font-size: 30px;
+    text-align: center;
+  } */
 body
 {
     font-family: 'Roboto', sans-serif;
@@ -22,6 +34,7 @@ a
     box-shadow: 0 2px 7px #dfdfdf;
     margin: 50px auto;
     background: #fafafa;
+    padding-top: 5px;
 }
 
 .badge {
@@ -40,8 +53,8 @@ a
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 300px;
-    padding: 50px;
+    height: 550px;
+    padding: 30px;
     background: #f0f0f0;
 }
 
@@ -89,6 +102,14 @@ a
     border-top: 1px solid #eee;
     padding-top: 20px;
 }
+img#product-img{
+    z-index: 1;
+        width: 20%;
+        height: 50%;
+        position: fixed;
+      
+}
+
 
 .product-bottom-details div {
     float: left;
@@ -124,3 +145,43 @@ a
 .product-links a:hover {
     color: #fbb72c;
 }
+.cardBtn{
+    margin-right: 20px;
+  }
+  
+  .paginationCard {
+    margin: 15px auto;
+    display: flex;
+    list-style: none;
+    outline: none;
+    margin-left: 425px;
+    margin-top: 50px;
+    text-align: center;
+  }
+  
+  .paginationCard > .active > a{
+    background-color: #47ccde ;
+    border-color: #47ccde ;
+    color: #fff;
+  }
+  
+  .paginationCard > li > a{
+    border: 1px solid #47ccde ;
+    padding: 5px 10px;
+    outline: none;
+    cursor: pointer;
+  }
+  
+  .paginationCard > .active > a, .paginationCard > .active > span, .paginationCard > .active > a:hover, .paginationCard > .active > span:hover, .paginationCard > .active > a:focus, .paginationCard > .active > span:focus{
+    background-color: #47ccde ;
+    border-color: #47ccde;
+    outline: none ;
+  }
+  
+  .paginationCard > li > a, .paginationCard > li > span{
+    color: #47ccde
+  }
+  
+  .paginationCard > li:first-child > a, .paginationCard > li:first-child > span, .paginationCard > li:last-child > a, .paginationCard > li:last-child > span{
+    border-radius: unset
+  }

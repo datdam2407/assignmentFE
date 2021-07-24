@@ -3,7 +3,7 @@ import { Button } from './Button';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 
-function Navbar() {
+function NavbarCustomer() {
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
 
@@ -26,7 +26,7 @@ function Navbar() {
     <>
       <nav className='navbar'>
         <div className='navbar-container'>
-          <Link to='/Admin' className='navbar-logo' >
+          <Link to='/' className='navbar-logo' >
             Assignment
             <i className='fab fa-typo3' />
           </Link>
@@ -35,13 +35,13 @@ function Navbar() {
           </div>
           <ul className={click ? 'nav-menu active' : 'nav-menu'}>
             <li className='nav-item'>
-              <Link to='/Admin' className='nav-links' >
+              <Link to='/' className='nav-links' >
                 Home
               </Link>
             </li>
             <li className='nav-item'>
               <Link
-                to='/products/'
+                to='/card/'
                 className='nav-links'
               >
                 Products
@@ -49,7 +49,7 @@ function Navbar() {
             </li>
             <li className='nav-item'>
               <Link
-                to='/categories/'
+                to='/'
                 className='nav-links'
               >
                 Category
@@ -71,4 +71,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default NavbarCustomer;

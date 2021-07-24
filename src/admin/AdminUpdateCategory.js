@@ -3,7 +3,7 @@ import './AdminAction.css';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-export default class AdminCreateProduct extends Component {
+export default class AdminUpdateCategory extends Component {
 
     constructor(props) {
         super(props)
@@ -63,8 +63,6 @@ export default class AdminCreateProduct extends Component {
             categoryDescription: e.target.value
         });
     }
-    
-  
     render() {
         return (
             <div class="containerr">

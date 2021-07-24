@@ -7,126 +7,166 @@ export default class AdminCreateProduct extends Component {
 
     constructor(props) {
         super(props)
+        this.onChangeproductName = this.onChangeproductName.bind(this);
+        this.onChangeproductDiscription = this.onChangeproductDiscription.bind(this);
+        this.onChangeproductPrice = this.onChangeproductPrice.bind(this);
+        this.onChangeproductImage = this.onChangeproductImage.bind(this);
+        this.onChangeproductQuantity = this.onChangeproductQuantity.bind(this);
+        this.onChangecategoryID = this.onChangecategoryID.bind(this);
+        this.createProduct = this.createProduct.bind(this);
+        
         this.state = {
             category: [],
             productName: '',
             productDiscription: '',
             productPrice: '',
             productImage: '',
-            productQuantity: '',
-            categoryid: '',
+            productQuantity: 1,
+            categoryID: '',
         }
-    }
-    componentDidMount() {
         this.getCategories();
-    }
 
-    getCategories(){
+    }
+    
+    onChangeproductName(e) {
+        this.setState({
+            productName: e.target.value
+        });
+    }
+    onChangeproductPrice(e) {
+        this.setState({
+            productPrice: e.target.value
+        });
+    }
+    onChangeproductDiscription(e) {
+        this.setState({
+            productDiscription: e.target.value
+        });
+    }
+    onChangeproductImage(e) {
+        this.setState({
+            productImage: e.target.value
+        });
+    }
+     onChangecategoryID(e) {
+        this.setState({
+            categoryID: e.target.value
+        });
+    }
+     onChangeproductQuantity(e) {
+        this.setState({
+            productQuantity: e.target.value
+        });
+    }
+    getCategories() {
         axios
-        .get('http://localhost:8080/categories/', {})
-        .then(res => {
-            this.setState({
-                category: res.data
-            });
-        })
-    }
-
-    handleChange = (event) => {
-        this.setState({ [event.target.name]: event.target.value });
-    }
-
-    getData() {
-        axios
-            .get('http://localhost:8080/categories/')
+            .get('http://localhost:8080/categories/', {})
             .then(res => {
-                var tdata = res.data;
-                console.log('data-->' + JSON.stringify(tdata))
-                var slice = tdata.slice(this.state.offset,
-                    this.state.offset + this.state.perPage)
-                this.setState({
-                    pageCount: Math.ceil(tdata.length / this.state.perPage),
-                    orgtableData: tdata,
-                    tableData: slice
-                })
-            });
+                if(res.data.length > 0 ){
+                    this.setState({
+                        category: res.data,
+                        categoryID : res.data[0].categoryID
+                    });
+                }
+                
+            })
     }
-    async createProduct(){
-        const product = {
+
+    async createProduct() {
+        var product = {
             productName: this.state.productName,
-            productDescription: this.state.productDescription,
+            productDiscription: this.state.productDiscription,
             productPrice: this.state.productPrice,
             productImage: this.state.productImage,
             productQuantity: this.state.productQuantity,
-            categoryid: this.state.categoryid,
+            categoryID: this.state.categoryID
         };
         const headers = {
-            'Authorization': 'auth',
-        }
-            
-        await axios.post('https://localhost:8080/products',  product , { headers,
-            params: {
-                categoryid: this.state.categoryid,
-
-            }
-        })
-            .then(res => {
-                console.log(res);
-                console.log(res.data);
-            })
+            'Content-Type': 'application/json',
+            'Authorization': localStorage.getItem('auth')
+        };
+        await axios.post(`http://localhost:8080/products?categoryid=${this.state.categoryID}`, product,
+            { headers }
+        )
+           
     }
-    
+
     render() {
         return (
-            <div class="containerr">
-                    <div class="row">
+            <div className="containerr">
+                <div className="row">
 
-                        <div class="col-25">
-                            <label for="fname">Product Name</label>
-                        </div>
-                        <div class="col-75">
-                            <input type="text" id="fname" name="productname" placeholder="Product name.." onChange={this.handleChange} />
-                        </div>
-                        <div class="col-25">
-                            <label for="fname">Product Image</label>
-                        </div>
-                        <div class="col-75">
-                            <input type="text" id="fname" name="image" placeholder="This is link of image.." onChange={this.handleChange} />
-                        </div>
+                    <div className="col-25">
+                        <label htmlFor="fname">Product Name</label>
                     </div>
-                    <div class="row">
-                        <div class="col-25">
-                            <label for="lname">Price</label>
-                        </div>
-                        <div class="col-75">
-                            <input type="text" id="lname" name="price" placeholder="Price.." onChange={this.handleChange} />
-                        </div>
+                    <div className="col-75">
+                        <input type="text" id="fname"
+                            name="productName"
+                            placeholder="Product name.."
+                            value={this.state.productName}
+                            onChange={this.onChangeproductName} />
                     </div>
-                    <div class="row">
-                        <div class="col-25">
-                            <label for="categoryid">category</label>
-                        </div>
-                        <div class="col-75">
-                            <select id="categoryid" name="categoryid" >                                {
-                                    this.state.category.map((item) => (
-                                        <option key={item.categoryid} 
-                                        value={item.categoryid}>
-                                            {item.categoryName}</option>
-                                    ))
-                                }
-                            </select>
-                        </div>
+                    <div className="col-25">
+                        <label htmlFor="fname">Product Image</label>
                     </div>
-                    <div class="row">
-                        <div class="col-25">
-                            <label for="Quantity">Quantity</label>
-                        </div>
-                        <div class="col-75">
-                            <input type="number" id="quantity" name="quantity" placeholder="quantity" onChange={this.handleChange}></input>
-                        </div>
+                    <div className="col-75">
+                        <input type="text" id="fname" 
+                        name="productImage" placeholder="This is link of image.." 
+                        value={this.state.productImage}
+                        onChange={this.onChangeproductImage} />
                     </div>
-                    <Link to={"/categories/"}>
-                        <button onClick={this.createProduct}>Create</button>
-                    </Link>
+                    <div className="col-25">
+                        <label htmlFor="fname">Discription</label>
+                    </div>
+                    <div className="col-75">
+                        <input type="text" id="fname" 
+                        name="productDiscription" placeholder="This is Discription.." 
+                        value={this.state.productDiscription}
+                        onChange={this.onChangeproductDiscription} />
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-25">
+                        <label htmlFor="lname">Price</label>
+                    </div>
+                    <div className="col-75">
+                        <input type="text" id="lname" name="productPrice" placeholder="Price.."
+                        value={this.state.productPrice}
+                        onChange={this.onChangeproductPrice} />
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-25">
+                        <label htmlFor="categoryID">category</label>
+                    </div>
+                    <div className="col-75">
+                        <select value={this.state.categoryID} id="categoryID" 
+                            name="categoryID"  
+                            onChange={this.onChangecategoryID}>                                {
+                            this.state.category.map((item) => (
+                                <option key={item.categoryID} value={item.categoryID}>
+                                {/* {item.categoryID} */}
+                                {item.categoryName}
+                                </option>
+                            ))
+                        }
+                        </select>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-25">
+                        <label htmlFor="Quantity">Quantity</label>
+                    </div>
+                    <div className="col-75">
+                        <input type="number" min="1" id="quantity"
+                            name="productQuantity" placeholder="quantity"
+                            value={this.state.productQuantity}
+                            onChange={this.onChangeproductQuantity}/>
+                    </div>
+                </div>
+                <Link to={"/products/"}>
+                    <button onClick={this.createProduct}>Create</button>
+                </Link>
 
             </div>
         )

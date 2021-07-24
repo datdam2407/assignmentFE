@@ -1,14 +1,14 @@
 import React from 'react';
 import '../../App.css';
-import BodyAppCustomer from '../BodyAppCustomer';
+import BodyApp from '../BodyApp';
 import Footer from '../Footer';
-import NavbarCustomer from '../NavbarCustomer'
+import Navbar from '../Navbar';
 // import ProductCard from '../../customer/ProductCard';
 function Home() {
   return (
     <>
-      <NavbarCustomer/>
-      <BodyAppCustomer/>      
+      <Navbar/>
+      <BodyApp/>      
       <Footer />
     </>
   );
