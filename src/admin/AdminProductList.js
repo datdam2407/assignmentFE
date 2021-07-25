@@ -23,24 +23,10 @@ class AdminProductList extends PureComponent {
     this.handlePageClick = this.handlePageClick.bind(this);
 
   }
-  modelIns = () => {
-    this.setState({ modelIns: !this.state.modelIns });
+  // modelIns = () => {
+  //   this.setState({ modelIns: !this.state.modelIns });
 
-  }
-//   componentDidMount() {
-//     this.getCategories();
-// }
-
-// getCategories() {
-//   axios
-//       .get('http://localhost:8080/categories/', {})
-//       .then(res => {
-//           this.setState({
-//               category: res.data,
-//           });
-//       })
-// }
-
+  // }
 
   handlePageClick = (e) => {
     const selectedPage = e.selected;

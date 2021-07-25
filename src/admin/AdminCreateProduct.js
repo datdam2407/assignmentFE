@@ -85,9 +85,14 @@ export default class AdminCreateProduct extends Component {
             'Content-Type': 'application/json',
             'Authorization': localStorage.getItem('auth')
         };
-        await axios.post(`http://localhost:8080/products?categoryid=${this.state.categoryID}`, product,
+        await axios.post(`http://localhost:8080/products?categoryid=${this.state.categoryID}`,
+         product,
             { headers }
-        )
+        ).then(() => {
+            this.props.history.push('/products/')
+        }).catch((error) => {
+            console.log(error)
+        })
            
     }
 
@@ -164,9 +169,7 @@ export default class AdminCreateProduct extends Component {
                             onChange={this.onChangeproductQuantity}/>
                     </div>
                 </div>
-                <Link to={"/products/"}>
                     <button onClick={this.createProduct}>Create</button>
-                </Link>
 
             </div>
         )

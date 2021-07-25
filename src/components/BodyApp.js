@@ -6,15 +6,15 @@ import './BodyApp.css';
 function BodyApp() {
   return (
     <div className='body-container'>
-      <h1>Shopping Now</h1>
-      <p>What are you waiting for?</p>
+      <h1>Admin Page</h1>
+      <p>HI Have a nice day!</p>
       <div className='body-btns'>
         <Button
           className='btns'
           buttonStyle='btn--outline'
           buttonSize='btn--large'
         >
-          GET STARTED
+          MANAGEMENT
         </Button>
       </div>
     </div>

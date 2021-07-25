@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from './Button';
-import { Link } from 'react-router-dom';
+import { Link , useHistory} from 'react-router-dom';
 import './Navbar.css';
 
 function NavbarCustomer() {
@@ -16,6 +16,27 @@ function NavbarCustomer() {
       setButton(true);
     }
   };
+  const history = useHistory();
+
+  const token = localStorage.getItem("auth");
+  let check;
+  if (token === null) {
+      check = "NOT_LOGGED_IN";
+  } else {
+      check = "LOGGED_IN";
+  }
+
+  function Logout(event) {
+      event.preventDefault();
+
+      try {
+          localStorage.clear();
+          sessionStorage.clear();
+          history.push("/");
+      } catch (e) {
+          alert(e.message);
+      }
+  }
 
   useEffect(() => {
     showButton();
@@ -55,16 +76,29 @@ function NavbarCustomer() {
                 Category
               </Link>
             </li>
-            <li>
+
+            {check == "NOT_LOGGED_IN" ?
+            <li nav-item>
               <Link
                 to='/login'
-                className='nav-links-mobile'
+                className='nav-links'
               >
                 Login
               </Link>
-            </li>
+            
+           </li>:              
+            <li nav-item>
+              <Link to ='/' onClick={(e) => {Logout(e)}} data-item='Logout'          
+                     className='nav-links'
+              >Logout</Link>
+              </li>
+
+              }
           </ul>
-          {button && <Button buttonStyle='btn--outline' buttonPath='/login'>Login</Button>}
+{/*         
+          {button && <Button buttonStyle='btn--outline' buttonPath='/login'>
+            Login</Button>} */}
+
         </div>
       </nav>
     </>

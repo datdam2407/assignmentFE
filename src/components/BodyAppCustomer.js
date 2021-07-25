@@ -1,11 +1,11 @@
 import React from 'react';
 import '../App.css';
 import { ButtonCus } from './ButtonCus';
-import './BodyApp.css';
+import './BodyAppCus.css';
 
 function BodyAppCustomer() {
   return (
-    <div className='body-container'>
+    <div className='body-containerr'>
       <h1>Shopping Now</h1>
       <p>What are you waiting for?</p>
       <div className='body-btns'>

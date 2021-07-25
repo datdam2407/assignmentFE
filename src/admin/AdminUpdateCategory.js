@@ -45,13 +45,11 @@ export default class AdminUpdateCategory extends Component {
         
     axios.put(`http://localhost:8080/categories/${this.state.categoryID}`, 
     data, { headers }).
-       then(response => {
-            console.log(response.data);
-          })
-          .catch(e => {
-            console.log(e);
-          });
-      }
+    then(() => {
+        this.props.history.push('/categories/')
+    }).catch((error) => {
+        console.log(error)
+    })}
       onChangeName(e) {
         this.setState({
             categoryName: e.target.value
@@ -99,9 +97,7 @@ export default class AdminUpdateCategory extends Component {
                     </div>
    
                     <div class="row">
-                    <Link to={"/categories/"}>
                         <button  onClick={this.updateCategory} >Update</button>
-                    </Link>
                     </div>
             </div>
         )

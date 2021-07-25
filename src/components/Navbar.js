@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from './Button';
-import { Link } from 'react-router-dom';
+import { Link ,useHistory} from 'react-router-dom';
 import './Navbar.css';
 
 function Navbar() {
@@ -16,7 +15,27 @@ function Navbar() {
       setButton(true);
     }
   };
+  const history = useHistory();
+  const token = localStorage.getItem("auth");
+  let check;
+  if (token === null) {
+      check = "NOT_LOGGED_IN";
+  } else {
+      check = "LOGGED_IN";
+  }
 
+  
+  function Logout(event) {
+    event.preventDefault();
+
+    try {
+        localStorage.clear();
+        sessionStorage.clear();
+        history.push("/");
+    } catch (e) {
+        alert(e.message);
+    }
+}
   useEffect(() => {
     showButton();
   }, []);
@@ -55,6 +74,7 @@ function Navbar() {
                 Category
               </Link>
             </li>
+            {check == "NOT_LOGGED_IN" ?
             <li>
               <Link
                 to='/login'
@@ -62,9 +82,16 @@ function Navbar() {
               >
                 Login
               </Link>
+            
+           </li>:              
+            <li nav-item>
+            <Link to ='/' onClick={(e) => {Logout(e)}} data-item='Logout'          
+                   className='nav-links'
+            >Logout</Link>
             </li>
+              }
           </ul>
-          {button && <Button buttonStyle='btn--outline' buttonPath='/login'>Login</Button>}
+          {/* {button && <Button buttonStyle='btn--outline' buttonPath='/login'>Login</Button>} */}
         </div>
       </nav>
     </>

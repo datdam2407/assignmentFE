@@ -41,6 +41,11 @@ export default class AdminCreateCategory extends Component {
         axios.post('http://localhost:8080/categories/', category, {
             headers
         })
+        .then(() => {
+            this.props.history.push('/categories/')
+        }).catch((error) => {
+            console.log(error)
+        })
 
     }
     render() {
@@ -80,9 +85,7 @@ export default class AdminCreateCategory extends Component {
 
 
                 <div class="row">
-                    <Link to={"/categories/"}>
                         <button onClick={this.createCategory} >Create</button>
-                    </Link>
                 </div>
             </div>
         )

@@ -4,12 +4,15 @@ import Admin from './components/pages/Admin';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 // import productlistCard from './customer/ProductCard';
 // import Products from './components/pages/Products';
+
 // Customer
 import ProductCard from './acustomer/ProductCard';
 import Cart from './components/pages/Cart';
+
 //Login and Register
 import SignUp from './components/pages/SignUp';
 import LogIn from './components/pages/LogIn';
+
 //Admin
 import AdminProductList from './admin/AdminProductList';
 import AdminCategory from './admin/AdminCategory';
@@ -21,7 +24,7 @@ import './App.css';
 function App() {
   return (
     <>
-      <Router>
+      <Router >
         <Switch>  
           <Route path='/' exact component={Home}/>
           <Route path='/products/'exact component={AdminProductList} />

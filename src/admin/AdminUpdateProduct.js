@@ -59,7 +59,6 @@ export default class AdminUpdateproduct extends Component {
                         categoryID: res.data.category.categoryID,
                         categoryName: res.data.category.categoryName,
                         categoryDescription: res.data.category.categoryDescription,
-
                     }
                     
                 })
@@ -86,12 +85,12 @@ export default class AdminUpdateproduct extends Component {
         };
         axios.put(`http://localhost:8080/products/${this.state.productID}`,
             data, { headers }).
-            then(response => {
-                console.log(response.data);
+            then(() => {
+                this.props.history.push('/products/')
+            }).catch((error) => {
+                console.log(error)
             })
-            .catch(e => {
-                console.log(e);
-            });
+               
     }
     onChangeproductName(e) {
         this.setState({
@@ -222,9 +221,7 @@ export default class AdminUpdateproduct extends Component {
                 </div>
 
                 <div class="row">
-                    <Link to={"/products/"}>
                         <button onClick={this.updateProduct} >Update</button>
-                    </Link>
                 </div>
             </div>
         )
