@@ -89,7 +89,7 @@ export default class ProductCard extends PureComponent {
 		return (
 			<>
 				<NavbarCustomer />
-				<div class="grid-container">
+				<div className="grid-container">
 
 				{
 					

@@ -1,9 +1,14 @@
-import React, { Component } from 'react';
+import React, { Component , useState } from 'react';
 import './SignIn.css';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import validator from 'validator'
+
 
 export default class Register extends Component {
+  
+  
+  
   constructor(props) {
     super(props)
     this.onChangepassword = this.onChangepassword.bind(this);
@@ -23,6 +28,7 @@ export default class Register extends Component {
       username: '',
     }
   }
+  
   onChangeusername(e) {
     this.setState({
       username: e.target.value,
@@ -79,7 +85,7 @@ export default class Register extends Component {
         <p>Please fill in this form to create an account.</p>
         <hr />
 
-        <label for="email"><b>Email</b></label>
+        <label htmlFor="email"><b>Email</b></label>
         <input type="text"
           placeholder="Enter Email"
           name="email"
@@ -87,7 +93,7 @@ export default class Register extends Component {
           onChange={this.onChangeemail}
           required />
 
-        <label for="email"><b>Username</b></label>
+        <label htmlFor="email"><b>Username</b></label>
         <input type="text"
           placeholder="Username"
           name="username"
@@ -95,7 +101,7 @@ export default class Register extends Component {
           onChange={this.onChangeusername}
           required />
 
-        <label for="email"><b>Phone</b></label>
+        <label htmlFor="email"><b>Phone</b></label>
         <input type="text"
           placeholder="Enter Phone number"
           name="phone"
@@ -103,21 +109,21 @@ export default class Register extends Component {
           onChange={this.onChangephone}
           required />
 
-        <label for="email"><b>address</b></label>
+        <label htmlFor="email"><b>address</b></label>
         <input type="text"
           placeholder="Address"
           name="address"
           value={this.state.address}
           onChange={this.onChangeaddress} required />
 
-        <label for="email"><b>Fullname</b></label>
+        <label htmlFor="email"><b>Fullname</b></label>
         <input type="text"
           placeholder="Your fullname"
           name="fullName"
           value={this.state.fullName}
           onChange={this.onChangefullName} required />
 
-        <label for="password"><b>Password</b></label>
+        <label htmlFor="password"><b>Password</b></label>
         <input type="password"
           placeholder="Enter Password"
           name="password"

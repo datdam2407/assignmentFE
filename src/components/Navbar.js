@@ -79,6 +79,7 @@ function Navbar() {
               <Link
                 to='/login'
                 className='nav-links-mobile'
+                
               >
                 Login
               </Link>
