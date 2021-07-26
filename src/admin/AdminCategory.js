@@ -44,19 +44,42 @@ export default class AdminCategoryList extends PureComponent {
 
   }
 
-  
- async getData() {
-    // localStorage.getcategory("auth");
-    let res = await axios.get('http://localhost:8080/categories/');
-    var tdata = res.data;
-    var slice = tdata.slice(this.state.offset,
-      this.state.offset + this.state.perPage)
-      this.setState({
-      pageCount: Math.ceil(tdata.length / this.state.perPage),
-      orgtableData: tdata,
-      tableData: slice
-    });
-  }
+  getData() {
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': localStorage.getItem('auth')
+      };
+    axios
+        .get('http://localhost:8080/categories/', { headers })
+        .then(res => {
+            var tdata = res.data;
+            console.log('data-->' + JSON.stringify(tdata))
+            var slice = tdata.slice(this.state.offset,
+                this.state.offset + this.state.perPage)
+            this.setState({
+                pageCount: Math.ceil(tdata.length / this.state.perPage),
+                orgtableData: tdata,
+                tableData: slice
+            })
+        });
+}
+//  async getData() {
+//     // localStorage.getcategory("auth");
+//     const headers = {
+//       'Content-Type': 'application/json',
+//       'Authorization': localStorage.getItem('auth')
+
+//     };
+//     let res = await axios.get('http://localhost:8080/categories/'), {headers};
+//     var tdata = res.data;
+//     var slice = tdata.slice(this.state.offset,
+//       this.state.offset + this.state.perPage)
+//       this.setState({
+//       pageCount: Math.ceil(tdata.length / this.state.perPage),
+//       orgtableData: tdata,
+//       tableData: slice
+//     });
+//   }
 
   delCategory(item) {
     const headers = {

@@ -22,8 +22,12 @@ export default class AdminUpdateCategory extends Component {
         this.getCategory(this.props.match.params.id);
       }
       getCategory(ID){
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': localStorage.getItem('auth')
+          };
             axios
-              .get(`http://localhost:8080/categories/${ID}`)
+              .get(`http://localhost:8080/categories/${ID}` , {headers})
               .then(res => {                
                 this.setState({
                     categoryID : res.data.categoryID,

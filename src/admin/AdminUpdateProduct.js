@@ -37,8 +37,12 @@ export default class AdminUpdateproduct extends Component {
         this.getproduct(this.props.match.params.id);
     }
     getCategories() {
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': localStorage.getItem('auth')
+          };
         axios
-            .get('http://localhost:8080/categories/', {})
+            .get('http://localhost:8080/categories/', {headers})
             .then(res => {
                 this.setState({
                     category: res.data,
@@ -99,7 +103,6 @@ export default class AdminUpdateproduct extends Component {
             }).catch((error) => {
                 console.log(error)
             })
-            alert("Update Suscessfully");
     }
     onChangeproductName(e) {
         this.setState({
