@@ -3,7 +3,7 @@ import './SignIn.css';
 import { Link , useHistory} from 'react-router-dom';
 import axios from 'axios';
 import NavbarCustomer from './NavbarCustomer';
-import validator ,{ isEmpty} from 'validator'
+import validator from 'validator'
 
 
 export default function SignIn() {
@@ -33,11 +33,11 @@ export default function SignIn() {
   }
   const validateAll = () =>{
     const msg ={}
-    if(validator.isEmpty(username)){
+    if(validator.isEmpty(username) ){
       msg.username= "Please input your username!!!"
     }
     if(validator.isEmpty(password)){
-      msg.username= "Please input your password!!!"
+      msg.password= "Please input your password!!!"
     }
     setValidation(msg)
     if(Object.keys(msg).length > 0 ) return false;
@@ -73,7 +73,7 @@ export default function SignIn() {
       <label htmlFor="email"><b>Username</b></label>
       <input type="text" placeholder="Enter Email" name="username" required 
       onChange={(e) => setUsername(e.target.value)} />
-      <p color = "red">{validation.username}</p>
+      <div style={{color : "red"}}>{validation.username}</div>
       <label htmlFor="password"><b>Password</b></label>
       <input type="password" placeholder="Enter Password" name="password" required 
       onChange={(e) => setPassword(e.target.value)} />
