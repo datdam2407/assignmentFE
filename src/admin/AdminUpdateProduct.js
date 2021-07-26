@@ -13,6 +13,7 @@ export default class AdminUpdateproduct extends Component {
         this.onChangeproductImage = this.onChangeproductImage.bind(this);
         this.onChangeproductQuantity = this.onChangeproductQuantity.bind(this);
         this.onChangecategoryID = this.onChangecategoryID.bind(this);
+        this.onChangeproductStatus = this.onChangeproductStatus.bind(this);
         this.updateProduct = this.updateProduct.bind(this);
         this.state = {
             category: [],
@@ -27,6 +28,7 @@ export default class AdminUpdateproduct extends Component {
                 categoryDescription:'',
             },
             productID: null,
+            productStatus:'',
 
         }
         this.getCategories();
@@ -45,8 +47,12 @@ export default class AdminUpdateproduct extends Component {
     }
 
     getproduct(ID) {
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': localStorage.getItem('auth')
+          };
         axios
-            .get(`http://localhost:8080/products/${ID}`)
+            .get(`http://localhost:8080/products/admin/${ID}` ,{headers})
             .then(res => {
                 this.setState({
                     productID: res.data.productID,
@@ -55,6 +61,7 @@ export default class AdminUpdateproduct extends Component {
                     productPrice: res.data.productPrice,
                     productImage: res.data.productImage,
                     productQuantity: res.data.productQuantity,
+                    productStatus: res.data.productStatus,
                     categoryDetail:{
                         categoryID: res.data.category.categoryID,
                         categoryName: res.data.category.categoryName,
@@ -73,6 +80,7 @@ export default class AdminUpdateproduct extends Component {
             productPrice: this.state.productPrice,
             productImage: this.state.productImage,
             productQuantity: this.state.productQuantity,
+            productStatus: this.state.productStatus,
             category : {
                 categoryID:this.state.categoryDetail.categoryID,
                 categoryName:this.state.categoryDetail.categoryName,
@@ -83,14 +91,15 @@ export default class AdminUpdateproduct extends Component {
             'Content-Type': 'application/json',
             'Authorization': localStorage.getItem('auth')
         };
-        axios.put(`http://localhost:8080/products/${this.state.productID}`,
+        axios.put(`http://localhost:8080/products/admin/${this.state.productID}`,
             data, { headers }).
             then(() => {
+                alert("Update Suscessfully");
                 this.props.history.push('/products/')
             }).catch((error) => {
                 console.log(error)
             })
-               
+            alert("Update Suscessfully");
     }
     onChangeproductName(e) {
         this.setState({
@@ -110,6 +119,11 @@ export default class AdminUpdateproduct extends Component {
     onChangeproductImage(e) {
         this.setState({
             productImage: e.target.value
+        });
+    }
+    onChangeproductStatus(e) {
+        this.setState({
+            productStatus: e.target.value
         });
     }
     onChangecategoryID(e) {
@@ -203,11 +217,11 @@ export default class AdminUpdateproduct extends Component {
                     </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-25">
-                            <label for="Description">Description</label>
+                    <div className="row">
+                        <div className="col-25">
+                            <label htmlFor="Description">Description</label>
                         </div>
-                        <div class="col-75">
+                        <div className="col-75">
                             <input type="text"
                                 id="Description"
                                 name="productDiscription" 
@@ -217,9 +231,27 @@ export default class AdminUpdateproduct extends Component {
                         </div>
 
                     </div>
+                    <div className="row">
+                    <div className="col-25">
+                        <label htmlFor="ProductStatus">Status</label>
+                    </div>
+                    <div className="col-75">
+                        <select  value={this.state.productStatus}
+                            onChange={this.onChangeproductStatus}>
+                            <option>ACTIVE</option>
+                            <option>INACTIVE</option>
+                            ))
+                        </select>
+                    </div>
+                    </div>
+                    
+
+                    
 
                 </div>
-
+                <Link to='/products/'>
+          <button type="button" >Cancel</button>
+        </Link>
                 <div class="row">
                         <button onClick={this.updateProduct} >Update</button>
                 </div>

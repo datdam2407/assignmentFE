@@ -3,6 +3,7 @@ import './AdminAction.css';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
+
 export default class AdminUpdateCategory extends Component {
 
     constructor(props) {
@@ -46,6 +47,8 @@ export default class AdminUpdateCategory extends Component {
     axios.put(`http://localhost:8080/categories/${this.state.categoryID}`, 
     data, { headers }).
     then(() => {
+        alert("Update Suscessfully");
+
         this.props.history.push('/categories/')
     }).catch((error) => {
         console.log(error)
@@ -95,6 +98,9 @@ export default class AdminUpdateCategory extends Component {
                             />
                         </div>
                     </div>
+                    <Link to='/categories/'>
+          <button type="button" >Cancel</button>
+        </Link>
    
                     <div class="row">
                         <button  onClick={this.updateCategory} >Update</button>

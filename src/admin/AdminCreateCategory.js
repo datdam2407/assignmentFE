@@ -1,94 +1,105 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import './AdminAction.css';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link , useHistory} from 'react-router-dom';
+import validator from 'validator'
 
-export default class AdminCreateCategory extends Component {
 
-    constructor(props) {
-        super(props)
-        this.onChangeName = this.onChangeName.bind(this);
-        this.onChangeDescription = this.onChangeDescription.bind(this);
-        this.createCategory = this.createCategory.bind(this);
-        this.state = {
-            categoryName: '',
-            categoryDescription: '',
-        }
-    }
+export default function AdminCreateCategory() {
 
-    onChangeName(e) {
-        this.setState({
-            categoryName: e.target.value
-        });
-    }
+    
+  const [categoryName, setcategoryName] = useState("");
+  const [categoryDescription, setcategoryDescription] = useState("");
+  const [validation, setValidation] = useState("");
+  const history = useHistory();
+    
 
-    onChangeDescription(e) {
-        this.setState({
-            categoryDescription: e.target.value
-        });
-    }
-
-    createCategory() {
+    
+    async function createCategory() {
         var category = {
-            categoryName: this.state.categoryName,
-            categoryDescription: this.state.categoryDescription
+            'categoryName': categoryName,
+            'categoryDescription': categoryDescription
         };
         const headers = {
             'Content-Type': 'application/json',
             'Authorization': localStorage.getItem('auth')
         };
 
-        axios.post('http://localhost:8080/categories/', category, {
+         await axios.post('http://localhost:8080/categories/', category, {
             headers
-        })
+        
+        }
+        )
         .then(() => {
-            this.props.history.push('/categories/')
+            history.push('/categories/')
         }).catch((error) => {
             console.log(error)
         })
 
     }
-    render() {
+    const validateAll = () =>{
+        const msg ={}
+        if(validator.isEmpty(categoryName) ){
+          msg.categoryName= "Please input name of Category!!!"
+        }
+        if(validator.isEmpty(categoryDescription)){
+          msg.categoryDescription= "Please input descroption!!!"
+        }
+        setValidation(msg)
+        if(Object.keys(msg).length > 0 ) return false;
+        return true;
+      }
+      async function handleSubmit(event) {
+    
+        event.preventDefault();
+        const isValid = validateAll();
+            const authortication = await createCategory();
+  
+    }
+    
         return (
-            <div class="containerr">
-                <div class="row">
-                    <div class="col-25">
-                        <label for="fname">Category Name</label>
+            <div className="containerr">
+                <div className="row">
+                    <div className="col-25">
+                        <label htmlFor="fname">Category Name</label>
                     </div>
-                    <div class="col-75">
+                    <div className="col-75">
                         <input
                             type="text"
                             id="fname"
                             name="categoryName"
-                            placeholder="categoryName.."
-                            value={this.state.categoryName}
-                            onChange={this.onChangeName}
-                        />
+                            placeholder="categoryName.." required
+                            onChange={(e) => setcategoryName(e.target.value)} />
+      <div style={{color : "red"}}>{validation.categoryName}</div>
+                        
                     </div>
                 </div>
-                <div class="row">
+                <div className="row">
 
-                    <div class="col-25">
-                        <label for="fname">Category Description</label>
+                    <div className="col-25">
+                        <label htmlFor="fname">Category Description</label>
                     </div>
-                    <div class="col-75">
+                    <div className="col-75">
                         <input
                             type="text"
                             id="fname"
                             name="categoryDescription"
-                            placeholder="categoryDescription.."
-                            value={this.state.categoryDescription}
-                            onChange={this.onChangeDescription}
-                        />
+                            placeholder="categoryDescription.." required
+                            onChange={(e) => setcategoryDescription(e.target.value)} />
+                            <div style={{color : "red"}}>{validation.categoryDescription}</div>
+                        
                     </div>
                 </div>
 
 
-                <div class="row">
-                        <button onClick={this.createCategory} >Create</button>
+                <div className="row">
+                <button onClick={(e) => { handleSubmit(e) }}
+                 >Create</button>
+                 <Link to='/categories/'>
+          <button type="button" className="cancelbtn">Cancel</button>
+        </Link>
                 </div>
             </div>
         )
-    }
-}
+        }
 

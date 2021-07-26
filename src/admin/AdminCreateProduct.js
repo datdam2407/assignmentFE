@@ -89,11 +89,12 @@ export default class AdminCreateProduct extends Component {
          product,
             { headers }
         ).then(() => {
+            
             this.props.history.push('/products/')
         }).catch((error) => {
             console.log(error)
         })
-           
+        alert("Create Suscessfully");
     }
 
     render() {
@@ -169,6 +170,9 @@ export default class AdminCreateProduct extends Component {
                             onChange={this.onChangeproductQuantity}/>
                     </div>
                 </div>
+                <Link to='/products/'>
+          <button type="button" >Cancel</button>
+        </Link>
                     <button onClick={this.createProduct}>Create</button>
 
             </div>

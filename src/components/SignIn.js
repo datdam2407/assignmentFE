@@ -13,9 +13,6 @@ export default function SignIn() {
   const [validation, setValidation] = useState("");
   const history = useHistory();
 
-  
-  
-
   async function access() {
     
   

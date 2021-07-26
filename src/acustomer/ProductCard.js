@@ -5,9 +5,6 @@ import React, { PureComponent } from 'react'
 import axios from 'axios';
 import ReactPaginate from 'react-paginate';
 
-import moment from 'moment';
-import { Link } from 'react-router-dom';
-import Navbar from '../components/Navbar';
 
 
 export default class ProductCard extends PureComponent {
@@ -26,10 +23,6 @@ export default class ProductCard extends PureComponent {
 		this.handlePageClick = this.handlePageClick.bind(this);
 
 	}
-
-	//   componentDidMount() {
-	//     this.getCategories();
-	// }
 
 	// getCategories() {
 	//   axios
@@ -68,7 +61,7 @@ export default class ProductCard extends PureComponent {
 
 	getData() {
 		axios
-			.get('http://localhost:8080/products/')
+			.get('http://localhost:8080/products/customer')
 			.then(res => {
 				var tdata = res.data;
 				console.log('data-->' + JSON.stringify(tdata))
@@ -83,14 +76,11 @@ export default class ProductCard extends PureComponent {
 	}
 
 
-
-
 	render() {
 		return (
 			<>
 				<NavbarCustomer />
 				<div className="grid-container">
-
 				{
 					
 					this.state.tableData.map((item) => (

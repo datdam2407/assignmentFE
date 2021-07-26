@@ -6,7 +6,7 @@ import axios from 'axios';
 import validator from 'validator'
 
 
-export default function SignIn() {
+export default function Register() {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");

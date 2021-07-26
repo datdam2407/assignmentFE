@@ -68,6 +68,7 @@ export default class AdminCategoryList extends PureComponent {
     axios.delete(`http://localhost:8080/categories/${item.categoryID}`, { headers })
       .then(res => {
         this.getData();
+        alert("Delete Successfully")
       }).catch(err => {
         console.log(err);
       })
@@ -105,6 +106,7 @@ export default class AdminCategoryList extends PureComponent {
                       <img className="editImage"
                         src='../images/edit.png' ></img>
                     </Link>
+                    
                       <img onClick={this.delCategory.bind(this, category)}
                        className="editImage"
                         src='../images/delete.png' ></img>

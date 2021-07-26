@@ -23,10 +23,6 @@ class AdminProductList extends PureComponent {
     this.handlePageClick = this.handlePageClick.bind(this);
 
   }
-  // modelIns = () => {
-  //   this.setState({ modelIns: !this.state.modelIns });
-
-  // }
 
   handlePageClick = (e) => {
     const selectedPage = e.selected;
@@ -52,21 +48,27 @@ class AdminProductList extends PureComponent {
 
   }
 
+ 
   getData() {
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': localStorage.getItem('auth')
+  
+      };
     axios
-      .get('http://localhost:8080/products/')
-      .then(res => {
-        var tdata = res.data;
-        console.log('data-->' + JSON.stringify(tdata))
-        var slice = tdata.slice(this.state.offset,
-          this.state.offset + this.state.perPage)
-        this.setState({
-          pageCount: Math.ceil(tdata.length / this.state.perPage),
-          orgtableData: tdata,
-          tableData: slice
-        })
-      });
-  }
+        .get('http://localhost:8080/products/admin', { headers })
+        .then(res => {
+            var tdata = res.data;
+            console.log('data-->' + JSON.stringify(tdata))
+            var slice = tdata.slice(this.state.offset,
+                this.state.offset + this.state.perPage)
+            this.setState({
+                pageCount: Math.ceil(tdata.length / this.state.perPage),
+                orgtableData: tdata,
+                tableData: slice
+            })
+        });
+}
   delProduct(item) {
     const headers = {
       'Content-Type': 'application/json',
@@ -104,6 +106,7 @@ class AdminProductList extends PureComponent {
               <th>updateDate</th>
               <th>Price</th>
               <th>Quantity</th>
+              <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -117,7 +120,7 @@ class AdminProductList extends PureComponent {
                   <td>{moment(item.updateDate).format("MMMM Do YYYY")}</td>
                   <td>{item.productPrice.toLocaleString('en-US', {style : 'currency', currency : 'VND'})}</td>
                   <td>{item.productQuantity}</td>
-                  
+                  <td>{item.productStatus}</td>
                   <td>
                   <Link to={"/updateProduct/" + item.productID}>
                       <img className="editImage"
