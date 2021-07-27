@@ -59,8 +59,12 @@ export default class AdminCreateProduct extends Component {
         });
     }
     getCategories() {
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': localStorage.getItem('auth')
+          };
         axios
-            .get('http://localhost:8080/categories/', {})
+            .get('http://localhost:8080/categories/admin', {headers})
             .then(res => {
                 if(res.data.length > 0 ){
                     this.setState({

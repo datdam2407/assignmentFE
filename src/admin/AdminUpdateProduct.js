@@ -29,7 +29,6 @@ export default class AdminUpdateproduct extends Component {
             },
             productID: null,
             productStatus:'',
-
         }
         this.getCategories();
     }
@@ -42,14 +41,13 @@ export default class AdminUpdateproduct extends Component {
             'Authorization': localStorage.getItem('auth')
           };
         axios
-            .get('http://localhost:8080/categories/', {headers})
+            .get('http://localhost:8080/categories/admin', {headers})
             .then(res => {
                 this.setState({
                     category: res.data,
                 });
             })
     }
-
     getproduct(ID) {
         const headers = {
             'Content-Type': 'application/json',
@@ -70,14 +68,13 @@ export default class AdminUpdateproduct extends Component {
                         categoryID: res.data.category.categoryID,
                         categoryName: res.data.category.categoryName,
                         categoryDescription: res.data.category.categoryDescription,
-                    }
-                    
+                    }       
                 })
-            });
+            })
     }
   
     updateProduct() {
-        console.log(this.state.categoryDetail   )
+        console.log(this.state.categoryDetail)
         var data = {
             productName: this.state.productName,
             productDiscription: this.state.productDiscription,

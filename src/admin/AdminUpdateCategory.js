@@ -27,7 +27,7 @@ export default class AdminUpdateCategory extends Component {
             'Authorization': localStorage.getItem('auth')
           };
             axios
-              .get(`http://localhost:8080/categories/${ID}` , {headers})
+              .get(`http://localhost:8080/categories/admin/${ID}` , {headers})
               .then(res => {                
                 this.setState({
                     categoryID : res.data.categoryID,
@@ -48,15 +48,26 @@ export default class AdminUpdateCategory extends Component {
                 'Authorization': localStorage.getItem('auth')
               };
         
-    axios.put(`http://localhost:8080/categories/${this.state.categoryID}`, 
+    axios.put(`http://localhost:8080/categories/admin/${this.state.categoryID}`, 
     data, { headers }).
     then(() => {
         alert("Update Suscessfully");
-
         this.props.history.push('/categories/')
-    }).catch((error) => {
-        console.log(error)
-    })}
+    }).catch(err => {
+        if(err.response){
+    
+            if(err.response.data.categoryName === "Hey input category's name...."){
+                alert("Name is empty");
+            }
+            else if(err.response.data.categoryDescription === "Should be inputed category's description...."){
+                alert("Description is empty");
+            }
+        }
+        else{
+            alert("Fail to update category!");
+        }
+    })
+}
       onChangeName(e) {
         this.setState({
             categoryName: e.target.value

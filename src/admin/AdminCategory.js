@@ -7,6 +7,7 @@ import Navbar from '../components/Navbar';
 
 export default class AdminCategoryList extends PureComponent {
 
+  
   constructor(props) {
     super(props)
     this.state = {
@@ -17,6 +18,7 @@ export default class AdminCategoryList extends PureComponent {
       currentPage: 0
     }
     this.getData();
+
     this.handlePageClick = this.handlePageClick.bind(this);
   }
  
@@ -50,7 +52,7 @@ export default class AdminCategoryList extends PureComponent {
         'Authorization': localStorage.getItem('auth')
       };
     axios
-        .get('http://localhost:8080/categories/', { headers })
+        .get('http://localhost:8080/categories/admin', { headers })
         .then(res => {
             var tdata = res.data;
             console.log('data-->' + JSON.stringify(tdata))
