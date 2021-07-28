@@ -174,7 +174,7 @@ export default class AdminCreateProduct extends Component {
                             onChange={this.onChangeproductQuantity}/>
                     </div>
                 </div>
-                <Link to='/products/'>
+                <Link to='/admin/products/'>
           <button type="button" >Cancel</button>
         </Link>
                     <button onClick={this.createProduct}>Create</button>

@@ -113,7 +113,7 @@ export default class AdminUpdateCategory extends Component {
                             />
                         </div>
                     </div>
-                    <Link to='/categories/'>
+                    <Link to='/admin/categories/'>
           <button type="button" >Cancel</button>
         </Link>
    

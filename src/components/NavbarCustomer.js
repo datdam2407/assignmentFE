@@ -47,36 +47,38 @@ function NavbarCustomer() {
     <>
       <nav className='navbar'>
         <div className='navbar-container'>
-          <Link to='/' className='navbar-logo' >
+          <a href='/home/body' className='navbar-logo' >
             Assignment
             <i className='fab fa-typo3' />
-          </Link>
+          </a>
           <div className='menu-icon' onClick={handleClick}>
             <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
           </div>
           <ul className={click ? 'nav-menu active' : 'nav-menu'}>
             <li className='nav-item'>
-              <Link to='/' className='nav-links' >
+              <a href='/home/body' className='nav-links' >
                 Home
-              </Link>
+              </a>
             </li>
             <li className='nav-item'>
-              <Link
-                to='/card/'
+              <a
+                href="/home/card"
                 className='nav-links'
               >
                 Products
-              </Link>
+              </a>
             </li>
-            <li className='nav-item'>
-              <Link
-                to='/'
-                className='nav-links'
-              >
-                Category
-              </Link>
-            </li>
-
+            {/* <li nav-item>
+            <a href="/cart">
+              Cart{' '}
+            {props.countCartItems ? (
+            <button className="badge">{props.countCartItems}</button>
+          ) : (
+            ''
+          )}
+            </a>{' '}
+            </li >  */}
+          
             {check == "NOT_LOGGED_IN" ?
             <li nav-item>
               <Link

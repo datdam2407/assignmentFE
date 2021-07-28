@@ -249,7 +249,7 @@ export default class AdminUpdateproduct extends Component {
                     
 
                 </div>
-                <Link to='/products/'>
+                <Link to='/admin/products/'>
           <button type="button" >Cancel</button>
         </Link>
                 <div class="row">

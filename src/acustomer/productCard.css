@@ -154,7 +154,7 @@ img#product-img{
     display: flex;
     list-style: none;
     outline: none;
-    margin-left: 425px;
+    margin-left: 50%;
     margin-top: 50px;
     text-align: center;
   }

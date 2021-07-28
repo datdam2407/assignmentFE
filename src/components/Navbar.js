@@ -24,7 +24,6 @@ function Navbar() {
       check = "LOGGED_IN";
   }
 
-  
   function Logout(event) {
     event.preventDefault();
 
@@ -45,41 +44,38 @@ function Navbar() {
     <>
       <nav className='navbar'>
         <div className='navbar-container'>
-          <Link to='/Admin' className='navbar-logo' >
+          <a href="/admin/body" className='navbar-logo' >
             Assignment
             <i className='fab fa-typo3' />
-          </Link>
+          </a>
           <div className='menu-icon' onClick={handleClick}>
             <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
           </div>
           <ul className={click ? 'nav-menu active' : 'nav-menu'}>
             <li className='nav-item'>
-              <Link to='/Admin' className='nav-links' >
+              <a href="/admin/body" className='nav-links' >
                 Home
-              </Link>
+              </a>
             </li>
             <li className='nav-item'>
-              <Link
-                to='/products/'
+              <a href="/admin/products/"
                 className='nav-links'
               >
-                Products
-              </Link>
+                Products   </a>
             </li>
             <li className='nav-item'>
-              <Link
-                to='/categories/'
+              <a
+                href="/admin/categories/"
                 className='nav-links'
               >
                 Category
-              </Link>
+              </a>
             </li>
             {check == "NOT_LOGGED_IN" ?
             <li>
               <Link
                 to='/login'
                 className='nav-links-mobile'
-                
               >
                 Login
               </Link>

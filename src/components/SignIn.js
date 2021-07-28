@@ -49,7 +49,8 @@ export default function SignIn() {
         console.log(authortication.data);
 
         if (authortication.data.roles[0] === "ROLE_MANAGER") {
-          history.push("/Admin");
+          sessionStorage.setItem("login" , authortication.data.roles[0]);
+          history.push("/admin/body");
         }
         else {
             history.push("/");

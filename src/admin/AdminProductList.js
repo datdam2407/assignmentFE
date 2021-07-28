@@ -5,7 +5,9 @@ import './AdminProductList.css';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
-
+import AdminSearchBar from './AdminSearchBar'
+import deleteImg from '../asset/images/delete.png'
+import editImg from '../asset/images/edit.png'
 class AdminProductList extends PureComponent {
 
   constructor(props) {
@@ -17,6 +19,7 @@ class AdminProductList extends PureComponent {
       orgtableData: [],
       perPage: 5,
       currentPage: 0
+      
     }
 
     this.getData();
@@ -77,6 +80,7 @@ class AdminProductList extends PureComponent {
     };
     axios.delete(`http://localhost:8080/products/manager/${item.productID}`, { headers })
       .then(res => {
+        alert("Delete Sucessfully")
         this.getData();
       }).catch(err => {
         console.log(err);
@@ -84,18 +88,11 @@ class AdminProductList extends PureComponent {
 
   }
   render() {
+   
     return (
       <div>
-        <Navbar/>
-        <div className="wrap">
-            <div className="search">
-                <input type="text" className="searchTerm" placeholder="What are you looking for?"/>
-                <button type="submit" className="searchButton">
-                    <i className="fa fa-search"></i>
-                </button>
-            </div>
-            </div>
-        <Link to="/create/" className="createButton" >Create new Product</Link>
+        <AdminSearchBar/>
+        <Link to="/admin/create/" className="createButton" >Create new Product</Link>
    
         <table className="container">
           <thead>
@@ -122,13 +119,13 @@ class AdminProductList extends PureComponent {
                   <td>{item.productQuantity}</td>
                   <td>{item.productStatus}</td>
                   <td>
-                  <Link to={"/updateProduct/" + item.productID}>
+                  <Link to={"/admin/updateProduct/" + item.productID}>
                       <img className="editImage"
-                        src='../images/edit.png' ></img>
+                        src={editImg} ></img>
                     </Link>
-                  <Link to={"/products/"}> 
+                  <Link to={"/admin/products/"}> 
                   <img onClick={this.delProduct.bind(this, item)} className="editImage" 
-                  src='../images/delete.png' ></img>
+                  src={deleteImg} ></img>
                   </Link>
                   </td>
                

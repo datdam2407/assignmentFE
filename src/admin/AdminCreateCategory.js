@@ -31,7 +31,7 @@ export default function AdminCreateCategory() {
         }
         )
         .then(() => {
-            history.push('/categories/')
+            history.push('/admin/categories/')
         }).catch((error) => {
             console.log(error)
         })
@@ -95,7 +95,7 @@ export default function AdminCreateCategory() {
                 <div className="row">
                 <button onClick={(e) => { handleSubmit(e) }}
                  >Create</button>
-                 <Link to='/categories/'>
+                 <Link to='/admin/categories/'>
           <button type="button" className="cancelbtn">Cancel</button>
         </Link>
                 </div>

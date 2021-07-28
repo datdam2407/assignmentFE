@@ -19,7 +19,7 @@ export const ButtonCus = ({
     : STYLES[0];
 
   const checkButtonSize = SIZES.includes(buttonSize) ? buttonSize : SIZES[0];
-  const linkTo = buttonPath === '/login' ? '/login' : '/card/'
+  const linkTo = buttonPath === '/login' ? '/login' : '/home/card'
   return (
     <Link to={linkTo}>
       <button

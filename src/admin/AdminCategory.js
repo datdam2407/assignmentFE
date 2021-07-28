@@ -4,7 +4,8 @@ import ReactPaginate from 'react-paginate';
 import './AdminProductList.css';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
-
+import deleteImg from '../asset/images/delete.png'
+import editImg from '../asset/images/edit.png'
 export default class AdminCategoryList extends PureComponent {
 
   
@@ -102,17 +103,8 @@ export default class AdminCategoryList extends PureComponent {
   render() {
     return (
       <div>
-        <Navbar/>
 
-        <div className="wrap">
-            <div className="search">
-                <input type="text" className="searchTerm" placeholder="What are you looking for?"/>
-                <button type="submit" className="searchButton">
-                    <i className="fa fa-search"></i>
-                </button>
-            </div>
-            </div>
-        <Link to="/createCategory" className="createButton" >Create new Category</Link>
+        <Link to="/admin/createCategory" className="createButton" >Create new Category</Link>
         <table className="container">
           <thead>
             <tr>
@@ -127,14 +119,14 @@ export default class AdminCategoryList extends PureComponent {
                   <td>{category.categoryName}</td>
                   <td>{category.categoryDescription}</td>
                   <td>
-                    <Link to={"/updateCategory/" + category.categoryID}>
+                    <Link to={"/admin/updateCategory/" + category.categoryID}>
                       <img className="editImage"
-                        src='../images/edit.png' ></img>
+                        src={editImg} ></img>
                     </Link>
                     
                       <img onClick={this.delCategory.bind(this, category)}
                        className="editImage"
-                        src='../images/delete.png' ></img>
+                        src={deleteImg} ></img>
                   </td>
                 </tr>
               ))
