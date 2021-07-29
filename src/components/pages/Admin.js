@@ -21,7 +21,7 @@ function Admin() {
   if (role === "ROLE_MANAGER") {
     return (
       <>
-        <Navbar />
+        <Navbar /> 
         <Router >
           <Switch>
             <Route path='/admin/body' component={BodyApp} />

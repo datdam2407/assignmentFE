@@ -131,7 +131,10 @@ export default class AdminCreateProduct extends Component {
 
         this.setState({
             errors: this.validator.validate(this.state),
+
         });
+        console.log("dawdwaadw", this.state.errors)
+
         var product = {
             productName: this.state.productName,
             productDiscription: this.state.productDiscription,
@@ -145,35 +148,20 @@ export default class AdminCreateProduct extends Component {
             'Content-Type': 'application/json',
             'Authorization': localStorage.getItem('auth')
         };
+        // if(this.state.errors.length < 1){
+
         await axios.post(`http://localhost:8080/products?categoryid=${this.state.categoryID}`,
             product,
             { headers }
+            
         ).then(() => {
-            alert("Create Successfully")
-            this.props.history.push('/admin/products/')
+            alert ("create successfully")
+                console.log("dawdwaadw", this.state.errors)
+             this.props.history.push('/admin/products/')
+             
         }).catch(err => {
-            // if (err.response) {
-
-            //     if (err.response.data.productName === "Name of product must be filled!!") {
-            //         alert("Name is empty");
-            //     }
-            //     else if (err.response.data.productDiscription === "Discription must be filled must be filled....") {
-            //         alert("Description is empty");
-            //     }
-                // else if (err.response.data.productImage === "Should be inputed link image !!!") {
-                //     alert("Should be inputed link image !!!");
-                // }
-                // else if(this.sproductQuantity <= 0){
-                //     alert("Quantity of product more than 0");
-                // }
-                // else if(this.state.productPrice <= 0){
-                //     alert("Price of product more than 0");
-                // }
-            // }
-            // else {
-            //     alert("Fail to Create Product!");
-            // }
         })
+    
     }
 
     render() {
@@ -195,7 +183,31 @@ export default class AdminCreateProduct extends Component {
                     </div>
                     {errors.productName && <div className="validation" style={{ display: 'block', color: "red" }}>{errors.productName}</div>}
                     <div className="row">
+                    <div className="col-25">
+                        <label htmlFor="Quantity">Quantity</label>
+                    </div>
+                    <div className="col-75">
+                        <input type="text" id="quantity"
+                            name="productQuantity" placeholder="quantity"
+                            value={this.state.productQuantity}
+                            onChange={this.onChangeproductQuantity} />
+                    </div>
+                {errors.productQuantity && <div className="validation" style={{ display: 'block', color: "red" }}>{errors.productQuantity}</div>}
 
+                </div>
+                    
+                    <div className="row">
+                    <div className="col-25">
+                        <label htmlFor="lname">Price</label>
+                    </div>
+                    <div className="col-75">
+                        <input type="text" id="lname" name="productPrice" placeholder="Price.."
+                            value={this.state.productPrice}
+                            onChange={this.onChangeproductPrice} />
+                    </div>
+                    {errors.productPrice && <div className="validation" style={{ display: 'block', color: "red" }}>{errors.productPrice}</div>}
+                </div>
+                    <div className="row">
                     <div className="col-25">
                         <label htmlFor="fname">Product Image</label>
                     </div>
@@ -219,22 +231,7 @@ export default class AdminCreateProduct extends Component {
                             onChange={this.onChangeproductDiscription} />
                     </div>
                     </div>
-                    {errors.productDiscription && <div className="validation" style={{ display: 'block', color: "red" }}>{errors.productDiscription}</div>}
-
-               
-
-                <div className="row">
-                    <div className="col-25">
-                        <label htmlFor="lname">Price</label>
-                    </div>
-                    <div className="col-75">
-                        <input type="text" id="lname" name="productPrice" placeholder="Price.."
-                            value={this.state.productPrice}
-                            onChange={this.onChangeproductPrice} />
-                    </div>
-                    {errors.productPrice && <div className="validation" style={{ display: 'block', color: "red" }}>{errors.productPrice}</div>}
-
-                </div>
+                    {errors.productDiscription && <div className="validation" style={{ display: 'block', color: "red" }}>{errors.productDiscription}</div>}              
                 <div className="row">
                     <div className="col-25">
                         <label htmlFor="categoryID">category</label>
@@ -253,21 +250,8 @@ export default class AdminCreateProduct extends Component {
                         </select>
                     </div>
                     {/* {errors.categoryName && <div className="validation" style={{ display: 'block', color: "red" }}>{errors.categoryName}</div>} */}
-
                 </div>
-                <div className="row">
-                    <div className="col-25">
-                        <label htmlFor="Quantity">Quantity</label>
-                    </div>
-                    <div className="col-75">
-                        <input type="text" id="quantity"
-                            name="productQuantity" placeholder="quantity"
-                            value={this.state.productQuantity}
-                            onChange={this.onChangeproductQuantity} />
-                    </div>
-                {errors.productQuantity && <div className="validation" style={{ display: 'block', color: "red" }}>{errors.productQuantity}</div>}
-
-                </div>
+            
                 <Link to='/admin/products/'>
                     <button type="button" >Cancel</button>
                 </Link>

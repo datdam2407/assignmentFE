@@ -6,6 +6,8 @@ function Navbar() {
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
 
+
+  let userLogin = sessionStorage.getItem("name");
   const handleClick = () => setClick(!click);
 
   const showButton = () => {
@@ -52,17 +54,14 @@ function Navbar() {
             <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
           </div>
           <ul className={click ? 'nav-menu active' : 'nav-menu'}>
-            <li className='nav-item'>
-              <a href="/admin/body" className='nav-links' >
-                Home
-              </a>
-            </li>
+          
             <li className='nav-item'>
               <a href="/admin/products/"
                 className='nav-links'
               >
-                Products   </a>
+                Products </a>
             </li>
+         
             <li className='nav-item'>
               <a
                 href="/admin/categories/"
@@ -70,6 +69,13 @@ function Navbar() {
               >
                 Category
               </a>
+
+            </li>
+            <li className='nav-item'>
+              <a href="#"
+                className='nav-links'
+              >
+                 Welcome {userLogin}</a>
             </li>
             {check == "NOT_LOGGED_IN" ?
             <li>

@@ -7,6 +7,7 @@ function NavbarCustomer() {
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
 
+  let userLogin = sessionStorage.getItem("name");
   const handleClick = () => setClick(!click);
 
   const showButton = () => {
@@ -68,6 +69,15 @@ function NavbarCustomer() {
                 Products
               </a>
             </li>
+            <li className='nav-item'>
+              <a
+                href="#"
+                className='nav-links'
+              >
+                  Welcome {userLogin}
+
+              </a>
+            </li>
             {/* <li nav-item>
             <a href="/cart">
               Cart{' '}
@@ -78,7 +88,6 @@ function NavbarCustomer() {
           )}
             </a>{' '}
             </li >  */}
-          
             {check == "NOT_LOGGED_IN" ?
             <li nav-item>
               <Link

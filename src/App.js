@@ -24,8 +24,6 @@ function App() {
             </Route>
             <Route path='/home'  component={Home} />
             <Route path='/admin' component={Admin} />
-            {/* <Route path='/' component={ResultCard} /> */}
-            {/* <Route path='/cart' component={Cart} /> */}
             <Route path='/login' component={LogIn} />
             <Route path='/signup' component={SignUp} />
 

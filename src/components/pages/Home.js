@@ -14,6 +14,7 @@ import SignUp from './SignUp';
 // import ProductCard from '../../customer/ProductCard';
 function Home() {
   let role = sessionStorage.getItem("login");
+  
   if (role === "ROLE_MANAGER") {
     return(
       <Redirect to="/admin/body" />
@@ -22,9 +23,11 @@ function Home() {
   else{
   return (
     <>
-      <NavbarCustomer/>
+      <NavbarCustomer/> 
+
         <Router >
           <Switch>
+
             <Route path='/home/body' component={BodyAppCustomer}/>
             {/* <Route path='/' exact component={Home} /> */}
             <Route path='/home/card' component={ProductCard} />

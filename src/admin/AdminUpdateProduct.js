@@ -22,7 +22,7 @@ export default class AdminUpdateproduct extends Component {
             productDiscription: '',
             productPrice: '',
             productImage: '',
-            productQuantity: '',
+            productQuantity: 0,
             categoryDetail:{
                 categoryID:'',
                 categoryName:'',
@@ -30,10 +30,57 @@ export default class AdminUpdateproduct extends Component {
             },
             productID: null,
             productStatus:'',
-            // message: '',
-            // errors: {},
-    
+            errors: {},
         }
+        const requiredWith = (value, field, state) => (!state[field] && !value) || !!value;
+        const rules = [
+            {
+                field: 'productName',
+                method: 'isEmpty',
+                validWhen: false,
+                message: 'This field is required.',
+            },
+            {
+                field: 'productImage',
+                method: 'isEmpty',
+                validWhen: false,
+                message: 'This Image must be required.',
+            },
+            {
+                field: 'productQuantity',
+                method: 'isEmpty',
+                validWhen: false,
+                message: 'This Quantity must be required.',
+            },
+            {
+                field: 'productQuantity',
+                method: 'isInt',
+                args: [{ min: 1 }],
+                validWhen: true,
+                message: 'Quantity must be positive number!!',
+            },
+            {
+                field: 'productPrice',
+                method: 'isEmpty',
+                validWhen: false,
+                message: 'Price must be required.',
+            },
+            {
+                field: 'productPrice',
+                method: 'isFloat',
+                args: [{ min: 100000 }],
+                validWhen: true,
+                message: 'Invalid money amount!!',
+            },
+            {
+                field: 'productDiscription',
+                method: 'isEmpty',
+                validWhen: false,
+                message: 'Discription must be required.',
+            },
+           
+        ];
+        this.validator = new Validator(rules);
     
         this.getCategories();
     }
@@ -67,9 +114,9 @@ export default class AdminUpdateproduct extends Component {
                     productID: res.data.productID,
                     productName: res.data.productName,
                     productDiscription: res.data.productDiscription,
-                    productPrice: res.data.productPrice,
+                    productPrice: res.data.productPrice.toString(),
                     productImage: res.data.productImage,
-                    productQuantity: res.data.productQuantity,
+                    productQuantity: res.data.productQuantity.toString(),
                     productStatus: res.data.productStatus,
                     categoryDetail:{
                         categoryID: res.data.category.categoryID,
@@ -81,9 +128,9 @@ export default class AdminUpdateproduct extends Component {
     }
   
     updateProduct() {
-        // this.setState({
-        //     errors: this.validator.validate(this.state),
-        //   });
+        this.setState({
+            errors: this.validator.validate(this.state),
+          });
 
         console.log(this.state.categoryDetail)
         var data = {
@@ -111,28 +158,9 @@ export default class AdminUpdateproduct extends Component {
                 alert("Update Suscessfully");
                 this.props.history.push('/admin/products/')
             }).catch(err => {
-                if(err.response){
-            
-                    if(err.response.data.productName === "Name of product must be filled!!"){
-                        alert("Name is empty");
-                    }
-                    else if(err.response.data.productDiscription === "Discription must be filled must be filled...."){
-                        alert("Description is empty");
-                    }
-                    else if(err.response.data.productImage === "Should be inputed link image !!!"){
-                        alert("Should be inputed link image !!!");
-                    }
-                    // else if(this.sproductQuantity <= 0){
-                    //     alert("Quantity of product more than 0");
-                    // }
-                    // else if(this.state.productPrice <= 0){
-                    //     alert("Price of product more than 0");
-                    // }
-                }
-                else{
-                    alert("Fail to update Product!");
-                }
-            })}}
+               
+                })
+            }}
     onChangeproductName(e) {
         this.setState({
             productName: e.target.value
@@ -176,7 +204,7 @@ export default class AdminUpdateproduct extends Component {
 
 
     render() {
-        const {errors} = this.state;
+        const { errors } = this.state;
 
         return (
             <div class="containerr">
@@ -194,9 +222,9 @@ export default class AdminUpdateproduct extends Component {
                             onChange={this.onChangeproductName}
                         />
                     </div>
-              
-
                 </div>
+                 {errors.productName && <div className="validation" style={{ display: 'block', color: "red" }}>{errors.productName}</div>}
+
                 <div class="row">
 
                     <div class="row">
@@ -204,7 +232,7 @@ export default class AdminUpdateproduct extends Component {
                             <label for="Quantity">Quantity</label>
                         </div>
                         <div class="col-75">
-                            <input type="number"
+                            <input type="text"
                                 id="quantity"
                                 name="quantity" placeholder="quantity"
                                 value={this.state.productQuantity}
@@ -212,6 +240,8 @@ export default class AdminUpdateproduct extends Component {
                         </div>
 
                     </div>
+                    {errors.productQuantity && <div className="validation" style={{ display: 'block', color: "red" }}>{errors.productQuantity}</div>}
+
                     <div class="col-25">
                         <label for="fname">Product Image</label>
                     </div>
@@ -223,6 +253,8 @@ export default class AdminUpdateproduct extends Component {
                             onChange={this.onChangeproductImage} required />
                     </div>
                 </div>
+                {errors.productImage && <div className="validation" style={{ display: 'block', color: "red" }}>{errors.productImage}</div>}
+
                 <div class="row">
                     <div class="col-25">
                         <label for="lname">Price</label>
@@ -234,6 +266,8 @@ export default class AdminUpdateproduct extends Component {
                             value={this.state.productPrice}
                             onChange={this.onChangeproductPrice} required />
                     </div>
+                    {errors.productPrice && <div className="validation" style={{ display: 'block', color: "red" }}>{errors.productPrice}</div>}
+
                     <div className="row">
                     <div className="col-25">
                         <label htmlFor="categoryID">category</label>
@@ -266,8 +300,9 @@ export default class AdminUpdateproduct extends Component {
                                 value={this.state.productDiscription}
                                 onChange={this.onChangeproductDiscription} required />
                         </div>
-
                     </div>
+                    {errors.productDiscription && <div className="validation" style={{ display: 'block', color: "red" }}>{errors.productDiscription}</div>}
+
                     <div className="row">
                     <div className="col-25">
                         <label htmlFor="ProductStatus">Status</label>
@@ -281,10 +316,6 @@ export default class AdminUpdateproduct extends Component {
                         </select>
                     </div>
                     </div>
-                    
-
-                    
-
                 </div>
                 <Link to='/admin/products/'>
           <button type="button" >Cancel</button>
