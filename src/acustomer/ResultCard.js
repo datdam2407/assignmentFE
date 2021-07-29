@@ -67,18 +67,12 @@ export default class ResultCard extends PureComponent {
 
 
 	render() {
-		if(this.state.tableData == null){
-			 this.props.location.push('/');
-		}else{
+		
 		return (
 			<>
-
-				<NavbarCustomer /> 						
-
 				<div className="grid-container">
 					
-				{
-					
+				{	
 					this.state.tableData.map((item) => (
 
 						<div className="product-card" key={item.productID}>
@@ -123,4 +117,4 @@ export default class ResultCard extends PureComponent {
 			</>
 		)
 	}
-}}
+}

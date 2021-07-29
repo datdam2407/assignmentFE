@@ -66,23 +66,6 @@ export default class AdminCategoryList extends PureComponent {
             })
         });
 }
-//  async getData() {
-//     // localStorage.getcategory("auth");
-//     const headers = {
-//       'Content-Type': 'application/json',
-//       'Authorization': localStorage.getItem('auth')
-
-//     };
-//     let res = await axios.get('http://localhost:8080/categories/'), {headers};
-//     var tdata = res.data;
-//     var slice = tdata.slice(this.state.offset,
-//       this.state.offset + this.state.perPage)
-//       this.setState({
-//       pageCount: Math.ceil(tdata.length / this.state.perPage),
-//       orgtableData: tdata,
-//       tableData: slice
-//     });
-//   }
 
   delCategory(item) {
     const headers = {
@@ -90,15 +73,16 @@ export default class AdminCategoryList extends PureComponent {
       'Authorization': localStorage.getItem('auth')
 
     };
-
+    if(window.confirm('Are you sure')){
     axios.delete(`http://localhost:8080/categories/${item.categoryID}`, { headers })
+    
       .then(res => {
         this.getData();
         alert("Delete Successfully")
       }).catch(err => {
         console.log(err);
       })
-
+    }
   }
   render() {
     return (
@@ -118,6 +102,8 @@ export default class AdminCategoryList extends PureComponent {
                 <tr key={category.categoryID}>
                   <td>{category.categoryName}</td>
                   <td>{category.categoryDescription}</td>
+                  {
+                  category.categoryName === "none" ? null :
                   <td>
                     <Link to={"/admin/updateCategory/" + category.categoryID}>
                       <img className="editImage"
@@ -128,6 +114,7 @@ export default class AdminCategoryList extends PureComponent {
                        className="editImage"
                         src={deleteImg} ></img>
                   </td>
+  }
                 </tr>
               ))
             }
@@ -153,36 +140,3 @@ export default class AdminCategoryList extends PureComponent {
     )
   }
 }
-
-// class SearchFormCategory extends React.Component{
-//   render()
-//   {
-//       return <form>
-//           <input placeholder="Enter the name to find"/>
-//       </form>
-//   }
-// }
-// class TableCategory extends React.Component{
-//   render()
-//   {
-//       return 
-//           <table class="container">
-//           <thead>
-//             <tr>
-//               <th>Name</th>
-//               <th>Discription</th>
-//             </tr>
-//           </thead>
-//           <tbody>
-//             {
-//               this.state.tableData.map((category) => (
-//                 <tr key={category.categoryID}>
-//                   <td>{category.categoryName}</td>
-//                   <td>{category.categoryDescription}</td>
-//                 </tr>
-//               ))
-//             }
-//           </tbody>
-//         </table>
-//   }
-// }

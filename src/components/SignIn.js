@@ -33,8 +33,14 @@ export default function SignIn() {
     if(validator.isEmpty(username) ){
       msg.username= "Please input your username!!!"
     }
+    if(username.length < 6){
+      msg.username= "Your username have at least 6 characters!!!"
+    }
     if(validator.isEmpty(password)){
       msg.password= "Please input your password!!!"
+    }
+    if(password.length < 6){
+      msg.password= "Your password is so weeek"
     }
     setValidation(msg)
     if(Object.keys(msg).length > 0 ) return false;
@@ -69,11 +75,11 @@ export default function SignIn() {
       <hr/>
 
       <label htmlFor="email"><b>Username</b></label>
-      <input type="text" placeholder="Enter Email" name="username" required 
+      <input min="6" type="text" placeholder="Enter Email" name="username" required 
       onChange={(e) => setUsername(e.target.value)} />
       <div style={{color : "red"}}>{validation.username}</div>
       <label htmlFor="password"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="password" required 
+      <input min="6" type="password" placeholder="Enter Password" name="password" required 
       onChange={(e) => setPassword(e.target.value)} />
       <div style={{color : "red"}}>{validation.password}</div>
 

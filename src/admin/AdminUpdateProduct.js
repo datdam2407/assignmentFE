@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './AdminAction.css';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import Validator from './Validator';
 
 export default class AdminUpdateproduct extends Component {
 
@@ -29,7 +30,11 @@ export default class AdminUpdateproduct extends Component {
             },
             productID: null,
             productStatus:'',
+            // message: '',
+            // errors: {},
+    
         }
+    
         this.getCategories();
     }
     componentDidMount() {
@@ -53,7 +58,9 @@ export default class AdminUpdateproduct extends Component {
             'Content-Type': 'application/json',
             'Authorization': localStorage.getItem('auth')
           };
+
         axios
+
             .get(`http://localhost:8080/products/admin/${ID}` ,{headers})
             .then(res => {
                 this.setState({
@@ -74,6 +81,10 @@ export default class AdminUpdateproduct extends Component {
     }
   
     updateProduct() {
+        // this.setState({
+        //     errors: this.validator.validate(this.state),
+        //   });
+
         console.log(this.state.categoryDetail)
         var data = {
             productName: this.state.productName,
@@ -92,15 +103,36 @@ export default class AdminUpdateproduct extends Component {
             'Content-Type': 'application/json',
             'Authorization': localStorage.getItem('auth')
         };
+        if(window.confirm('Do you want to update this Product!')){
+
         axios.put(`http://localhost:8080/products/admin/${this.state.productID}`,
             data, { headers }).
             then(() => {
                 alert("Update Suscessfully");
-                this.props.history.push('/products/')
-            }).catch((error) => {
-                console.log(error)
-            })
-    }
+                this.props.history.push('/admin/products/')
+            }).catch(err => {
+                if(err.response){
+            
+                    if(err.response.data.productName === "Name of product must be filled!!"){
+                        alert("Name is empty");
+                    }
+                    else if(err.response.data.productDiscription === "Discription must be filled must be filled...."){
+                        alert("Description is empty");
+                    }
+                    else if(err.response.data.productImage === "Should be inputed link image !!!"){
+                        alert("Should be inputed link image !!!");
+                    }
+                    // else if(this.sproductQuantity <= 0){
+                    //     alert("Quantity of product more than 0");
+                    // }
+                    // else if(this.state.productPrice <= 0){
+                    //     alert("Price of product more than 0");
+                    // }
+                }
+                else{
+                    alert("Fail to update Product!");
+                }
+            })}}
     onChangeproductName(e) {
         this.setState({
             productName: e.target.value
@@ -144,6 +176,8 @@ export default class AdminUpdateproduct extends Component {
 
 
     render() {
+        const {errors} = this.state;
+
         return (
             <div class="containerr">
                 <div class="row">
@@ -160,6 +194,8 @@ export default class AdminUpdateproduct extends Component {
                             onChange={this.onChangeproductName}
                         />
                     </div>
+              
+
                 </div>
                 <div class="row">
 
@@ -206,8 +242,9 @@ export default class AdminUpdateproduct extends Component {
                         <select id="categoryID" 
                             name="categoryID"  
                             onChange={this.onChangecategoryID}>                                {
-                            this.state.category.map((item) => (
-                                <option key={item.categoryID} selected={item.categoryID === this.state.categoryDetail.categoryID}
+                            this.state.category.map((item) => (                             
+                                <option key={item.categoryID} 
+                                selected={item.categoryID === this.state.categoryDetail.categoryID}
                                 value={item.categoryID}>                       
                                 {item.categoryName}
                                 </option>

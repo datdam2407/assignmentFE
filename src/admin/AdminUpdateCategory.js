@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './AdminAction.css';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import  Validator from './Validator';
 
 
 export default class AdminUpdateCategory extends Component {
@@ -16,7 +17,25 @@ export default class AdminUpdateCategory extends Component {
             categoryID: null,
             categoryName: '',
             categoryDescription: '',
-    };
+            errors: {},
+            
+    }
+    const requiredWith = (value, field, state) => (!state[field] && !value) || !!value;
+    const rules = [
+        {
+            field: 'categoryName',
+            method: 'isEmpty',
+            validWhen: false,
+            message: 'This field is required.',
+        },
+        {
+            field: 'categoryDescription',
+            method: 'isEmpty',
+            validWhen: false,
+            message: 'This field is required.',
+        },
+    ]       
+    this.validator = new Validator(rules);
     }
     componentDidMount() {
         this.getCategory(this.props.match.params.id);
@@ -37,7 +56,12 @@ export default class AdminUpdateCategory extends Component {
               });
           
       }
-      updateCategory() {
+      updateCategory(e) {
+        e.preventDefault();
+
+        this.setState({
+            errors: this.validator.validate(this.state),
+        });
         var data = {
           categoryName: this.state.categoryName,
           categoryDescription: this.state.categoryDescription,
@@ -47,30 +71,34 @@ export default class AdminUpdateCategory extends Component {
                 'Content-Type': 'application/json',
                 'Authorization': localStorage.getItem('auth')
               };
-        
+    if(window.confirm('Do you want to update this category!')){
+
     axios.put(`http://localhost:8080/categories/admin/${this.state.categoryID}`, 
     data, { headers }).
     then(() => {
         alert("Update Suscessfully");
-        this.props.history.push('/categories/')
+        this.props.history.push('/admin/categories/')
     }).catch(err => {
-        if(err.response){
+    //     if(err.response){
     
-            if(err.response.data.categoryName === "Hey input category's name...."){
-                alert("Name is empty");
-            }
-            else if(err.response.data.categoryDescription === "Should be inputed category's description...."){
-                alert("Description is empty");
-            }
-        }
-        else{
-            alert("Fail to update category!");
-        }
+    //         if(err.response.data.categoryName === "Hey input category's name...."){
+    //             alert("Name is empty");
+    //         }
+    //         else if(err.response.data.categoryDescription === "Should be inputed category's description...."){
+    //             alert("Description is empty");
+    //         }
+    //     }
+    //     else{
+    //         alert("Fail to update category!");
+    //     }
+    // })
     })
 }
+}
       onChangeName(e) {
+        
         this.setState({
-            categoryName: e.target.value
+            categoryName: e.target.value,
         });
     }
     
@@ -80,6 +108,8 @@ export default class AdminUpdateCategory extends Component {
         });
     }
     render() {
+        const { errors } = this.state;
+
         return (
             <div class="containerr">
                     <div class="row">
@@ -97,6 +127,8 @@ export default class AdminUpdateCategory extends Component {
                             />
                         </div>
                     </div>
+                    {errors.categoryName && <div className="validation" style={{ display: 'block', color: "red" }}>{errors.categoryName}</div>}
+
                     <div class="row">
 
                         <div class="col-25">
@@ -113,12 +145,15 @@ export default class AdminUpdateCategory extends Component {
                             />
                         </div>
                     </div>
+                    {errors.categoryDescription && <div className="validation" style={{ display: 'block', color: "red" }}>{errors.categoryDescription}</div>}
+
                     <Link to='/admin/categories/'>
           <button type="button" >Cancel</button>
         </Link>
-   
+                
                     <div class="row">
-                        <button  onClick={this.updateCategory} >Update</button>
+                        
+                        <button onClick={this.updateCategory} >Update</button>
                     </div>
             </div>
         )

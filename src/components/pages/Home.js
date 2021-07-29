@@ -13,7 +13,13 @@ import SignUp from './SignUp';
 
 // import ProductCard from '../../customer/ProductCard';
 function Home() {
-  
+  let role = sessionStorage.getItem("login");
+  if (role === "ROLE_MANAGER") {
+    return(
+      <Redirect to="/admin/body" />
+      )
+    }
+  else{
   return (
     <>
       <NavbarCustomer/>
@@ -32,5 +38,5 @@ function Home() {
     </>
   );
 }
-
+  }
 export default Home;

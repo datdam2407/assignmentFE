@@ -78,6 +78,7 @@ class AdminProductList extends PureComponent {
       'Authorization': localStorage.getItem('auth')
 
     };
+    if(window.confirm('Are you sure')){
     axios.delete(`http://localhost:8080/products/manager/${item.productID}`, { headers })
       .then(res => {
         alert("Delete Sucessfully")
@@ -85,7 +86,7 @@ class AdminProductList extends PureComponent {
       }).catch(err => {
         console.log(err);
       })
-
+    }
   }
   render() {
    

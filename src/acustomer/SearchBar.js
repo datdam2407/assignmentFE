@@ -9,12 +9,13 @@ export default function SearchBar() {
     const history = useHistory();
     function handleSubmit(event) {
         event.preventDefault();
+        
         try {
             sessionStorage.setItem('searchValue', searchValue);
             history.push("/home/result");
             window.location.reload(false);
         } catch (e) {
-           alert('Something wrong')
+            alert('Something wrong')
         }
     }
     

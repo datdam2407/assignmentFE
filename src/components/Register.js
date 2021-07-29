@@ -35,17 +35,29 @@ export default function Register() {
     if (validator.isEmpty(email)) {
       msg.email = "Please input your email!!!"
     }
+    if (!validator.isEmail(email)) {
+      msg.email = "Invalid email!!!"
+    }
     if (validator.isEmpty(username)) {
       msg.username = "Please input your username!!!"
     }
+    if (username.length < 6) {
+      msg.username = "Your username have at least 6 characters!!!"
+    }
     if (validator.isEmpty(phone)) {
       msg.phone = "Please input your phone!!!"
+    }
+    if (!validator.isMobilePhone(phone)) {
+      msg.phone = "invalid Phone"
     }
     if (validator.isEmpty(address)) {
       msg.address = "Please input your address!!!"
     }
     if (validator.isEmpty(fullName)) {
       msg.fullName = "Please input your fullname!!!"
+    }
+    if (fullName.length > 30) {
+      msg.fullName = "fullname is too long!!!"
     }
     if (validator.isEmpty(password)) {
       msg.password = "Please input your password!!!"
